@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "dataset artifact (JSONL entry)",
+  "description": "One line of an artifacts/datasets/reference/*.jsonl file.",
+  "type": "object",
+  "required": ["query"],
+  "properties": {
+    "query":        { "type": "string", "minLength": 1 },
+    "context":      { "type": "string" },
+    "response":    { "type": "string" },
+    "ground_truth": { "type": "string" }
+  }
+}

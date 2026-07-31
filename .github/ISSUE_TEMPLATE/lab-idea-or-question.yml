@@ -1,0 +1,138 @@
+name: 💡 Lab idea or learner question
+description: Suggest a new lab, propose a deep-dive topic, or ask a question that could become a future More Lab.
+title: "[idea] "
+labels: ["lab-idea", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping shape the workshop! We review these regularly and turn the
+        best ones into new **More Labs** (see [`labs/more/`](../tree/main/labs/more)).
+
+        - 🎓 **Learners** — use this to ask a question or suggest a topic you'd like a lab on.
+        - 🛠️ **Maintainers** — use this to capture your own lab ideas so they're tracked.
+
+        For in-lab help, activate the [workshop-coach](../blob/main/.github/agents/workshop-coach.agent.md) instead of filing an issue.
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of submission is this?
+      options:
+        - Question I'd like answered as a future lab
+        - Idea for a new More Lab (deep-dive)
+        - Idea for a new Core Lab (fundamental to the DevOps loop)
+        - Improvement to an existing lab
+        - Something else
+    validations:
+      required: true
+
+  - type: input
+    id: summary
+    attributes:
+      label: One-line summary
+      description: Phrase it as the question the lab would answer, if possible.
+      placeholder: "How do I red-team a hosted agent before shipping it?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem or scenario does this address?
+      description: What is the learner trying to solve? What made you ask?
+      placeholder: |
+        As a learner who just finished the Core Labs, I want to know how to...
+        because in production I expect to face...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: loop_node
+    attributes:
+      label: Which part of the Agent DevOps loop does this touch?
+      description: If you're not sure, pick "Not sure".
+      options:
+        - Plan
+        - Build
+        - Evaluate
+        - Deploy
+        - Monitor
+        - Optimize
+        - Multiple / cross-cutting
+        - Not sure
+    validations:
+      required: true
+
+  - type: dropdown
+    id: agent_type
+    attributes:
+      label: Which agent does this apply to?
+      options:
+        - Prompt Agent
+        - Hosted Agent
+        - Both
+        - Neither / general Foundry topic
+    validations:
+      required: true
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: What should a learner be able to do after this lab?
+      description: Write this as a verifiable outcome. This becomes the lab's `✅ Verify` section.
+      placeholder: |
+        - Run an adversarial evaluation against my agent
+        - Interpret the failure categories
+        - Add a mitigation and re-run to see it pass
+    validations:
+      required: false
+
+  - type: textarea
+    id: prereqs
+    attributes:
+      label: Prerequisites the learner should have completed
+      description: List labs (e.g., `fundamentals/06-verify`) or concepts.
+      placeholder: |
+        - fundamentals/06-verify
+        - core/02-evaluate-portal
+    validations:
+      required: false
+
+  - type: textarea
+    id: references
+    attributes:
+      label: References, docs, or examples
+      description: Links to Microsoft Learn, Foundry docs, blog posts, papers, or code.
+      placeholder: |
+        - https://learn.microsoft.com/azure/ai-foundry/...
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: How urgent does this feel to you?
+      options:
+        - Nice-to-have — someday
+        - Would help me soon
+        - Blocking me from adopting the workshop
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Willing to help?
+      options:
+        - label: I'd be willing to draft this lab or co-author it.
+        - label: I'd be willing to review a draft.
+        - label: Just filing the idea — no bandwidth to contribute right now.
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        **What happens next?** Maintainers triage `lab-idea` issues on a regular
+        cadence, research the top candidates, and promote them to a `labs/more/`
+        entry via the flow in [`.github/MAINTAINERS.md`](../blob/main/.github/MAINTAINERS.md).

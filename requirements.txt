@@ -1,0 +1,5 @@
+# Runtime dependencies for the workshop (Fundamentals + Core Labs).
+# TODO(nitya): pin exact versions once we author labs-fundamentals/03-deploy-models.
+azure-identity
+azure-ai-projects
+python-dotenv
