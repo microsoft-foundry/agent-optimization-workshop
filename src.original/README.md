@@ -1,7 +1,9 @@
-# Hosted Agent — pristine snapshot
+# `src.original/` — pristine baseline for the hosted agent
 
-**Do not edit.** This is the baseline `reset.sh` restores `../src/` from.
+**Do not edit files in this directory directly.** This is the reset target for
+`scripts/reset.sh`. It must always represent a clean starting state so learners
+can re-run the labs from scratch.
 
-<!-- TODO(nitya): mirror src/ once ported. Keep this folder read-only from
-     the learner's perspective; any change here should be an intentional
-     course revision (bump baseline). -->
+If you legitimately need to update the baseline (e.g., bump a dependency), do
+it in a single coordinated PR that touches both `src/` and `src.original/` so
+they stay in sync. `tests/test_reset.py` guards this.

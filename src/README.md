@@ -1,12 +1,38 @@
-# Hosted Agent — working copy
+# `src/` — Contoso Travel Concierge (hosted agent)
 
-Learners edit this directory during Core Lab 05 (capstone) and More Labs.
+This is the **working copy** of the hosted agent. Learners edit files here
+during the labs (especially `instructions/concierge.md` in Core Lab 3).
 
-- **Reset:** `./scripts/reset.sh` restores this folder from `../src.original/`.
-- **Pristine reference:** [`../src.original/`](../src.original/) — read-only.
+To restore the pristine baseline at any time:
 
-<!-- TODO(nitya): port the Contoso Travel Concierge hosted agent code here.
-     Source: microsoft/Build26-LAB540 zava/src/zava-travel-concierge/
-     Rebrand: Zava -> Contoso, ZV-* IDs -> CT-*, agent name -> Contoso Travel Concierge.
-     Files expected: main.py, agent.yaml, agent.manifest.yaml, Dockerfile,
-     requirements.txt, instructions/, .env.example. -->
+```bash
+./scripts/reset.sh
+```
+
+That copies `src.original/` back over `src/`.
+
+## Layout
+
+| Path | Role |
+|---|---|
+| `main.py` | Agent Framework orchestrator + specialist tools (flights/hotels/cars) |
+| `agent.yaml` / `agent.manifest.yaml` | Hosted-agent deployment descriptors |
+| `Dockerfile` | Container build for the Foundry runtime |
+| `requirements.txt` | Python runtime deps |
+| `data/*.csv` | Bundled copy of the Contoso datasets (same shape as repo-root `data/`) |
+| `instructions/concierge.md` | **Active** concierge system prompt (loaded at startup) |
+| `instructions/versions/instructions-0.md` | Immutable baseline seed |
+| `instructions/versions/instructions-N.md` | Snapshots taken during Lab 3 |
+| `scripts/reset-instructions.sh` | Reset the active prompt back to baseline |
+| `scripts/snapshot-instructions.sh` | Snapshot the active prompt as the next version |
+
+## Running locally
+
+<!-- TODO(nitya): confirm the exact `azd ai agent run` incantation once
+     provisioning is validated end-to-end. -->
+
+```bash
+azd ai agent run
+```
+
+See `../labs/fundamentals/05-deploy-hosted-agent.md` for the full deploy flow.

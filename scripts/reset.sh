@@ -5,8 +5,8 @@
 #   ./scripts/reset.sh            # do the reset
 #   ./scripts/reset.sh --dry-run  # report drift without changing anything
 #
-# TODO(nitya): once src.original/ contains the ported hosted-agent code,
-# extend this to preserve learner-authored .env files if desired.
+# README.md is intentionally excluded from the reset because src/ and
+# src.original/ carry different maintainer-facing READMEs.
 
 set -euo pipefail
 
@@ -24,19 +24,28 @@ if [[ ! -d "$ORIG" ]]; then
   exit 2
 fi
 
-# Compare src/ against src.original/
-if diff -r "$ORIG" "$SRC" > /dev/null 2>&1; then
+# Compare src/ against src.original/, ignoring README.md
+if diff -r --exclude=README.md "$ORIG" "$SRC" > /dev/null 2>&1; then
   echo "✓ src/ matches src.original/ — no drift, nothing to reset."
   exit 0
 fi
 
 if $DRY_RUN; then
   echo "src/ differs from src.original/. Run without --dry-run to reset."
-  diff -r "$ORIG" "$SRC" || true
+  diff -r --exclude=README.md "$ORIG" "$SRC" || true
   exit 0
 fi
 
 echo "Resetting src/ from src.original/ ..."
+# Preserve src/README.md (learner-facing), replace everything else.
+TMP_README="$(mktemp)"
+if [[ -f "${SRC}/README.md" ]]; then
+  cp "${SRC}/README.md" "${TMP_README}"
+fi
 rm -rf "$SRC"
 cp -R "$ORIG" "$SRC"
+if [[ -s "${TMP_README}" ]]; then
+  cp "${TMP_README}" "${SRC}/README.md"
+fi
+rm -f "${TMP_README}"
 echo "✓ Reset complete."
