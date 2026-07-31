@@ -81,12 +81,13 @@ Fundamentals prerequisites: [`labs/fundamentals/`](./labs/fundamentals/).
 
 Extensible library of one-question deep dives — take in any order after Core.
 
-- [Troubleshoot a failing trace](./labs/more/troubleshooting.md)
-- [Red-team your agent](./labs/more/red-teaming.md)
-- [Continuous evaluation](./labs/more/continuous-eval.md)
-- [Datasets from real traces](./labs/more/trace-driven-datasets.md)
-
-See [`labs/more/README.md`](./labs/more/README.md) for the full index.
+| # | Lab | Loop node |
+|---|-----|-----------|
+| 1 | [Troubleshoot a failing trace](./labs/more/troubleshooting.md) | Monitor |
+| 2 | [Red-team your agent](./labs/more/red-teaming.md) | Protect |
+| 3 | [Continuous evaluation](./labs/more/continuous-eval.md) | Evaluate |
+| 4 | [Datasets from real traces](./labs/more/trace-driven-datasets.md) | Evaluate |
+| … | … see [`labs/more/README.md`](./labs/more/README.md) for the full index | |
 
 ## Contributing
 

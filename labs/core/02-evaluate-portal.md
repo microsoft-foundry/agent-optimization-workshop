@@ -1,58 +1,102 @@
-# Lab 02 — Evaluate the Prompt Agent
+# Core Lab 02 — Evaluate the Prompt Agent with built-in evaluators
 
-> **What you'll do:** Assemble a small dataset, wire up a built-in quality evaluator, and score the Prompt Agent.
-> **Time:** ~25 min · **Prerequisites:** [Core Lab 01](./01-observe-portal.md)
+> **What you'll do:** Run a **batch evaluation** of the Prompt Agent against a curated dataset in the Foundry portal, and read the results.
+> **Time:** ~20 min · **Prerequisites:** [Core Lab 01](./01-observe-portal.md)
 
 ## 🎯 Goal
 
-Move from vibes to numbers — produce a repeatable **scorecard** for the
-current Prompt Agent that we can compare against later.
+Move from per-turn *live* evaluation to a **batch** evaluation over a whole
+dataset. You'll create an evaluation run, wait for results, and identify
+concrete failure patterns to fix in Core Lab 03.
 
 ## 🧭 Where this fits
 
 ```mermaid
 flowchart LR
-    Plan --> Build --> Evaluate([Evaluate]):::active --> Deploy --> Monitor --> Optimize --> Evaluate
-    Monitor --> Protect --> Evaluate
+    Plan([Plan]) --> Build([Build]) --> Evaluate([Evaluate]):::active --> Deploy([Deploy]) --> Monitor([Monitor]) --> Optimize([Optimize]) --> Evaluate
+    Monitor --> Protect([Protect]) --> Evaluate
 
     classDef active fill:#0ea5e9,stroke:#0369a1,color:#fff;
 ```
 
+> 🧭 **This lab covers:** _Evaluate_ — quantifying how the agent does on a
+> known dataset.
+
+## The reference dataset
+
+The workshop ships a curated evaluation dataset at
+[`../../artifacts/datasets/reference/evaluation-data-v1.jsonl`](../../artifacts/datasets/reference/evaluation-data-v1.jsonl).
+It contains ~15 queries across three difficulty tiers (single-specialist,
+multi-part itinerary, and out-of-scope refusal) that together stress-test the
+Prompt Agent baseline.
+
+> 💡 **Reproducibility.** You *could* have Foundry generate a dataset for you
+> (and Core Lab 03 will), but starting from the shipped reference guarantees
+> everyone sees the same failures.
+
 ## 📋 Steps
 
-1. **Generate a sample dataset.**
-   In the portal, use "Generate dataset" seeded from your traces (Lab 01) to
-   produce ~10 travel queries.
+1. **Open Evaluations.**
+   Foundry portal → **My assets → Evaluations** → **+ New evaluation**.
 
-   > 💡 If yours looks weak, use the shipped reference:
-   > ```bash
-   > ./scripts/use-reference.sh datasets sample-prompts-v1
-   > ```
+   <!-- TODO(nitya): screenshot of the "New evaluation" flow -->
 
-   <!-- TODO(nitya): screenshot of Generate dataset flow. -->
-2. **Create a quality evaluator** bound to your `evaluator` model deployment.
+2. **Choose the target.**
+   Under **Target**, pick the **`contoso-travel-concierge-prompt`** agent.
 
-   > 💡 Or use the reference:
-   > ```bash
-   > ./scripts/use-reference.sh evaluators quality-evaluator-v1
-   > ```
-3. **Run the evaluation** against the Prompt Agent using your dataset.
-4. **Record the baseline score** — you'll compare against it in Lab 03.
+3. **Upload the dataset.**
+   Under **Data**, upload
+   `artifacts/datasets/reference/evaluation-data-v1.jsonl` (or use
+   `./scripts/use-reference.sh datasets evaluation-data-v1` first to stage it).
+
+4. **Select evaluators.**
+   Enable at least:
+   - **Task completion**
+   - **Groundedness**
+   - **Coherence**
+   - **Relevance**
+   - **Indirect attack** (safety)
+
+   If you deployed a **judge model** in Fundamentals Lab 03, pick it under
+   **Evaluator model**.
+
+   <!-- TODO(nitya): screenshot of the evaluator selection panel -->
+
+5. **Run the evaluation.**
+   Click **Create**. The run takes 2–5 minutes depending on dataset size.
+
+6. **Read the results.**
+   When the run finishes, open it. You'll see:
+   - **Per-metric aggregate scores** across the whole dataset
+   - **Per-row detail** — for each query, the agent's answer, the ground
+     truth (if provided), and each evaluator's score + rationale
+
+7. **Identify the top failure pattern.**
+   Sort by lowest score. Read three or four low-scoring rows. Look for a
+   *common* failure mode — asking-instead-of-answering, missing IDs, no price
+   citation, ungrounded superlatives, etc. Write it down; Core Lab 03 will
+   target it.
+
+   <!-- TODO(nitya): screenshot of a low-scoring row with the evaluator rationale expanded -->
+
+> ⚠️ **Gotcha:** if every score is unusually low, your dataset may not have
+> reached the agent. Confirm the target agent name and rerun.
 
 ## ✅ Verify
 
-You have:
-
-- A dataset of ≥10 rows in `artifacts/datasets/generated/`
-- An evaluator run whose scorecard shows aggregate quality metrics
-- A written-down baseline number (screenshot or note)
+- The evaluation run's status is **Succeeded**.
+- You noted the **lowest-scoring evaluator** *and* the **top failure pattern**
+  in plain English — e.g. *"agent asks for cabin class instead of answering
+  when it isn't supplied"*.
 
 ## 🧠 Recap
 
-- A repeatable dataset + evaluator is what makes optimization real.
-- Reference artifacts unblock you when generation is weak — but running the
-  generation yourself is where the learning is.
+- Batch evaluation puts a **number** next to a hypothesis about weakness.
+- Groundedness + relevance failures usually point at the **prompt**, not the
+  model. That's exactly what Core Lab 03 optimizes.
+- Reference datasets exist so learners hit the same failures — reproducibility
+  by design.
 
 ## ➡️ Next
 
-**[Lab 03 — Optimize with Copilot + Foundry skills](./03-optimize-skills.md)**
+**[Core Lab 03 — Optimize with Foundry Skills + Copilot](./03-optimize-skills.md)**

@@ -279,34 +279,38 @@ Legend: ✅ complete · 🟡 stub/partial · ❌ not started · – not applicab
 | Area | Obs | LAB540 | This repo | Notes |
 |---|:---:|:---:|:---:|---|
 | Scenario + data (unified) | ✅ | ✅ | ✅ | Contoso Travel Concierge; CSVs + reference datasets shipped |
-| azd provisioning | – | ✅ | 🟡 | `fundamentals/01-provision-azd.md` — body TODO |
-| Portal provisioning | ✅ | – | 🟡 | `fundamentals/02-provision-portal.md` — body TODO |
-| Model deployment | ✅ | ✅ | 🟡 | `fundamentals/03-deploy-models.md` — body TODO |
-| Prompt Agent creation | ✅ | – | 🟡 | `fundamentals/04-create-prompt-agent.md` — body TODO |
-| Hosted Agent source (`src/` + `src.original/`) | – | ✅ | ❌ | main.py, agent.yaml, Dockerfile, instructions/ — not ported |
-| Hosted Agent deploy lab | – | ✅ | 🟡 | `fundamentals/05-deploy-hosted-agent.md` — body TODO |
-| Bicep infra (`infra/`) | – | ✅ | ❌ | main.bicep, params, core/ — not ported |
-| Fundamentals verify lab | – | – | 🟡 | `fundamentals/06-verify.md` — body TODO |
-| Core: observability in portal | ✅ | partial | 🟡 | `core/01-observe-portal.md` — body TODO |
-| Core: evaluation | ✅ | – | 🟡 | `core/02-evaluate-portal.md` — body TODO |
-| Core: optimize with Foundry Skills | ✅ | – | 🟡 | `core/03-optimize-skills.md` — body TODO |
-| Core: monitoring | ✅ | ✅ | 🟡 | `core/04-monitor-portal.md` — body TODO |
-| Core: capstone on hosted agent | – | – | 🟡 | `core/05-capstone-hosted.md` — depends on hosted-src port |
-| More: red-teaming | ✅ | – | 🟡 | `labs/more/red-teaming.md` — body TODO |
-| More: troubleshooting | partial | partial | 🟡 | `labs/more/troubleshooting.md` — body TODO |
-| More: continuous evaluation | ✅ | – | 🟡 | `labs/more/continuous-eval.md` — body TODO |
-| More: trace-driven datasets | ✅ | – | 🟡 | `labs/more/trace-driven-datasets.md` — body TODO |
-| Screenshots | ✅ | ✅ | ❌ | Every lab has `<!-- TODO(nitya): screenshot -->` markers |
+| azd provisioning | – | ✅ | ✅ | `fundamentals/01-provision-azd.md` — full body from LAB540 |
+| Portal provisioning | ✅ | – | ✅ | `fundamentals/02-provision-portal.md` — full body |
+| Model deployment | ✅ | ✅ | ✅ | `fundamentals/03-deploy-models.md` — full body (azd + portal paths) |
+| Prompt Agent creation | ✅ | – | ✅ | `fundamentals/04-create-prompt-agent.md` — references baseline artifact |
+| Hosted Agent source (`src/` + `src.original/`) | – | ✅ | ✅ | main.py, agent.yaml, Dockerfile, instructions/, scripts/ ported + rebranded |
+| Hosted Agent deploy lab | – | ✅ | ✅ | `fundamentals/05-deploy-hosted-agent.md` — full body |
+| Bicep infra (`infra/`) | – | ✅ | ✅ | main.bicep, params, core/{ai,host,monitor,search,storage} ported + rebranded |
+| Fundamentals verify lab | – | – | ✅ | `fundamentals/06-verify.md` — canonical question, both agents |
+| Core: observability in portal | ✅ | partial | ✅ | `core/01-observe-portal.md` — playground + live evaluators + traces |
+| Core: evaluation | ✅ | – | ✅ | `core/02-evaluate-portal.md` — batch eval against reference dataset |
+| Core: optimize with Foundry Skills | ✅ | – | ✅ | `core/03-optimize-skills.md` — Copilot + microsoft-foundry observe skill |
+| Core: monitoring | ✅ | ✅ | ✅ | `core/04-monitor-portal.md` — Monitor tab + agent-helper insights |
+| Core: capstone on hosted agent | – | – | ✅ | `core/05-capstone-hosted.md` — full loop on Hosted Agent |
+| More: red-teaming | ✅ | – | ✅ | `labs/more/red-teaming.md` — safety evaluator batch + mitigation |
+| More: troubleshooting | partial | partial | ✅ | `labs/more/troubleshooting.md` — trace-driven diagnosis cheat sheet |
+| More: continuous evaluation | ✅ | – | ✅ | `labs/more/continuous-eval.md` — CI job + thresholds |
+| More: trace-driven datasets | ✅ | – | ✅ | `labs/more/trace-driven-datasets.md` — KQL → JSONL → promote flow |
+| Reference prompt artifact | – | – | ✅ | `artifacts/prompts/reference/prompt-agent-baseline-v1.md` |
+| Screenshots | ✅ | ✅ | ❌ | Every lab has `<!-- TODO(nitya): screenshot -->` markers ready for capture |
 | Workshop-coach agent | – | – | ✅ | Contract + 6 skills; passes tests |
 | Specs + tests + CI | – | – | ✅ | 14 pytest tests, GH Actions verify-course.yml |
 | Devcontainer | – | – | ✅ | Python 3.13 bookworm + az/azd/gh + coach volume |
 | Reproducibility (`reset.sh`, `use-reference.sh`) | – | – | ✅ | Scripts + reference artifacts |
 | Issue template for lab ideas | – | – | ✅ | `.github/ISSUE_TEMPLATE/lab-idea-or-question.yml` |
 | Maintainers guide | – | – | ✅ | `.github/MAINTAINERS.md` |
-| Rebrand pass (Zava → Contoso) | – | – | ✅ | Applied to data + reference artifacts; pending for src/ + infra |
+| Rebrand pass (Zava → Contoso) | – | – | ✅ | Applied to data + artifacts + src/ + src.original/ + infra/ |
 
 ### Next-up order
 
-1. **Port hosted-agent source** from LAB540 into `src/` and mirror to `src.original/` (rebranded).
-2. **Port `infra/`** bicep + parameters from LAB540 (rebranded).
-3. **Fill lab bodies** in the order learners hit them (fundamentals → core → more), leaving `<!-- TODO(nitya): ... -->` for screenshots and any live values that need learner-specific input.
+Remaining work for parity:
+
+1. **Screenshots** — walk each lab and fill the `<!-- TODO(nitya): screenshot -->` markers with captured images under `labs/<phase>/images/`.
+2. **Refine live commands** — confirm exact `azd ai agent invoke` / evaluation-runner commands once you've done a live end-to-end pass, and replace remaining TODOs in the code fences.
+3. **Ship the reference optimized prompt** at `artifacts/prompts/reference/prompt-agent-optimized-v2.md` after the first live optimization run so learners can compare before/after without running the loop.
+4. **Optional** — add a `More Labs` entry for a specific published Foundry feature (e.g., "Bring your own evaluator") once you validate it end-to-end.

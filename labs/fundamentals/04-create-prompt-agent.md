@@ -1,57 +1,102 @@
-# Lab 04 — Create the Prompt Agent (no-code)
+# Lab 04 — Create the Prompt Agent
 
-> **What you'll do:** Author a baseline Prompt Agent in the Foundry portal that answers travel questions using the shared CSV data.
+> **What you'll do:** Create the "Contoso Travel Concierge" **Prompt Agent** in the Foundry portal, seeded with the baseline system prompt and the three Contoso datasets.
 > **Time:** ~15 min · **Prerequisites:** [Lab 03](./03-deploy-models.md)
 
 ## 🎯 Goal
 
-Stand up a no-code **Prompt Agent** — the baseline you'll observe, evaluate,
-and optimize throughout Core Labs.
+Get a working, portal-authored **Prompt Agent** you can chat with — this is
+what Core Labs 01–04 observe, evaluate, optimize, and monitor.
 
 ## 🧭 Where this fits
 
 ```mermaid
 flowchart LR
-    Plan --> Build([Build]):::active --> Evaluate --> Deploy --> Monitor --> Optimize --> Evaluate
-    Monitor --> Protect --> Evaluate
+    Plan([Plan]) --> Build([Build]):::active
+    Build --> Evaluate([Evaluate]) --> Deploy([Deploy]) --> Monitor([Monitor]) --> Optimize([Optimize]) --> Evaluate
+    Monitor --> Protect([Protect]) --> Evaluate
 
     classDef active fill:#0ea5e9,stroke:#0369a1,color:#fff;
 ```
 
+> 🧭 **This lab covers:** _Build_ — creating the prompt-agent flavor of the Concierge.
+
+## What's a "prompt agent"?
+
+A **Prompt Agent** in Foundry is a lightweight, portal-authored agent: it has
+instructions (a system prompt), attached tools/knowledge (files, functions,
+grounding), and a model — but no container. It's the fastest path to a working
+agent and the natural starting point for observability.
+
+Contrast with the **Hosted Agent** you already deployed via `azd up`
+(`contoso-concierge`), which is a containerized multi-agent orchestrator you
+control in code — deeper power, more moving parts.
+
+The workshop uses **both** so you can compare their observability, evaluation,
+and optimization surfaces.
+
 ## 📋 Steps
 
-1. **Open Agents → Create → Prompt Agent** in the Foundry portal.
-2. **Name it `contoso-travel-concierge`.** Bind it to your `chat` model deployment.
-3. **Author instructions.**
-   Start with a minimal baseline — for example:
+1. **Open the Foundry portal and select your project.**
 
-   > You are the Contoso Travel Concierge. Help travelers plan trips using
-   > flights, hotels, and car rentals from Contoso's inventory. Ask
-   > clarifying questions when needed.
+2. **Create a new agent.**
+   Sidebar → **My assets → Agents** → **+ New agent** → **Prompt agent**.
+   Name it **`contoso-travel-concierge-prompt`**.
 
-   <!-- TODO(nitya): drop in the reference prompt from
-        artifacts/prompts/reference/prompt-agent-baseline-v1.md once authored,
-        or point learners at `./scripts/use-reference.sh prompts prompt-agent-baseline-v1`. -->
-4. **Attach the shared data.**
-   Upload `data/flights.csv`, `data/hotels.csv`, `data/car_rentals.csv` as
-   knowledge files, or wire them via a tool.
-5. **Save and open the Playground.**
+   <!-- TODO(nitya): screenshot of the "New agent" flow -->
+
+3. **Pick the model.**
+   Under **Model**, choose the deployment you created in Lab 03
+   (`gpt-5.4-mini`). Leave temperature at the default for now.
+
+4. **Paste the baseline instructions.**
+   Under **Instructions**, paste the contents of
+   [`../../artifacts/prompts/reference/prompt-agent-baseline-v1.md`](../../artifacts/prompts/reference/prompt-agent-baseline-v1.md).
+
+   > 💡 This is intentionally the *underperforming baseline* — it works for
+   > simple questions but fails on the eval set. That gap is what Core Lab 03
+   > closes.
+
+5. **Attach the Contoso datasets as knowledge (files).**
+   Under **Knowledge → Files**, upload:
+   - `data/flights.csv`
+   - `data/hotels.csv`
+   - `data/car_rentals.csv`
+
+   <!-- TODO(nitya): screenshot of the three files attached under Knowledge -->
+
+6. **Save the agent.**
+   Click **Save** or **Deploy**. Wait for the agent to reach *Ready*.
+
+7. **Smoke-test in the playground.**
+   Click **Try in playground** and ask:
+
+   > *"What business-class flights are available from Chicago to Rome under $2500?"*
+
+   You should get a grounded answer citing entries from `flights.csv`. Now try:
+
+   > *"Plan a weekend in Tokyo."*
+
+   Notice how the baseline agent asks a lot of clarifying questions instead of
+   proposing an itinerary — that's exactly the failure mode Core Lab 03 will fix.
+
+> ⚠️ **Gotcha:** if the agent's answers don't reference the CSV data, your
+> files probably didn't finish indexing. Wait a minute and re-ask, or reattach.
 
 ## ✅ Verify
 
-In the Playground, send:
-
-> "Find me a Business-class flight from Seattle to Paris in August."
-
-You should get back a response that references a `CT-FL-*` flight id.
+- The Foundry portal shows `contoso-travel-concierge-prompt` under
+  **My assets → Agents** with status **Ready**.
+- The playground returns grounded answers that reference specific flight IDs
+  (e.g., `CT-FL-...`).
 
 ## 🧠 Recap
 
-- The Prompt Agent is a **no-code baseline** — instructions + data, no runtime.
-- We'll observe → evaluate → optimize this same agent in Core Labs.
-- If your agent hallucinates a flight not in the CSV, that's exactly the kind
-  of failure the DevOps loop will catch and fix.
+- A Prompt Agent = instructions + tools/knowledge + model — all portal-authored.
+- You seeded the intentionally-weak **baseline v1** prompt so Core Lab 03 has
+  something to improve.
+- You now have **two agents** deployed: the Prompt Agent and the Hosted Agent.
 
 ## ➡️ Next
 
-**[Lab 05 — Deploy the Hosted Agent](./05-deploy-hosted-agent.md)**
+**[Lab 05 — Deploy (or redeploy) the Hosted Agent](./05-deploy-hosted-agent.md)**
