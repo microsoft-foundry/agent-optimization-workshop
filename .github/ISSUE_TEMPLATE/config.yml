@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Ask the Workshop Coach
+    url: https://github.com/nitya/agent-optimization-workshop/blob/main/.github/agents/workshop-coach.agent.md
+    about: For questions while you're inside a lab, activate the workshop-coach agent instead of filing an issue.

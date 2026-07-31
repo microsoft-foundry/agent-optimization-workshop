@@ -1,0 +1,177 @@
+# Course spec — single source of truth for structure, coach, and tests.
+#
+# Consumed by:
+#   - tests/ (structure, links, artifact wiring)
+#   - .github/agents/skills/{lab-guide,progress-tracker}.md (coach navigation)
+#
+# When you add/rename/reorder a lab, update this file first — tests will guide
+# the rest.
+
+name: Contoso Travel Concierge Workshop
+version: 0.1.0
+agent_name: Contoso Travel Concierge
+
+phases:
+  - id: fundamentals
+    title: Fundamentals
+    goal: Provision Microsoft Foundry and deploy both agent implementations.
+    labs:
+      - id: "00-overview"
+        title: Course overview & the Agent DevOps loop
+        loop_node: plan
+        time_min: 10
+        prereqs: []
+        produces: []
+        consumes: []
+      - id: "01-provision-azd"
+        title: Provision Foundry with `azd up`
+        loop_node: build
+        time_min: 15
+        prereqs: ["fundamentals/00-overview"]
+        produces: [{type: config, name: azd-env}]
+        consumes: []
+      - id: "02-provision-portal"
+        title: Provision Foundry with the portal (alt path)
+        loop_node: build
+        time_min: 15
+        prereqs: ["fundamentals/00-overview"]
+        produces: [{type: config, name: portal-project}]
+        consumes: []
+      - id: "03-deploy-models"
+        title: Deploy required models
+        loop_node: build
+        time_min: 10
+        prereqs: ["fundamentals/01-provision-azd"]
+        produces: [{type: config, name: model-deployments}]
+        consumes: []
+      - id: "04-create-prompt-agent"
+        title: Create the Prompt Agent (no-code)
+        loop_node: build
+        time_min: 15
+        prereqs: ["fundamentals/03-deploy-models"]
+        produces:
+          - {type: prompts, name: prompt-agent-baseline-v1}
+        consumes:
+          - {type: data, name: flights}
+          - {type: data, name: hotels}
+          - {type: data, name: car_rentals}
+      - id: "05-deploy-hosted-agent"
+        title: Deploy the Hosted Agent (`azd up`)
+        loop_node: deploy
+        time_min: 15
+        prereqs: ["fundamentals/03-deploy-models"]
+        produces: [{type: config, name: hosted-agent-endpoint}]
+        consumes: []
+      - id: "06-verify"
+        title: Smoke-test both agents
+        loop_node: monitor
+        time_min: 10
+        prereqs:
+          - "fundamentals/04-create-prompt-agent"
+          - "fundamentals/05-deploy-hosted-agent"
+        produces: []
+        consumes: []
+
+  - id: core
+    title: Core Labs — the Agent DevOps loop
+    goal: Complete the observe → evaluate → optimize → monitor loop end-to-end.
+    labs:
+      - id: "00-overview"
+        title: Core Labs overview
+        loop_node: plan
+        time_min: 5
+        prereqs: ["fundamentals/06-verify"]
+        produces: []
+        consumes: []
+      - id: "01-observe-portal"
+        title: Observe traces in the Foundry portal
+        loop_node: monitor
+        time_min: 20
+        prereqs: ["core/00-overview"]
+        produces: []
+        consumes: [{type: prompts, name: prompt-agent-baseline-v1}]
+      - id: "02-evaluate-portal"
+        title: Evaluate the Prompt Agent with built-in evaluators
+        loop_node: evaluate
+        time_min: 25
+        prereqs: ["core/01-observe-portal"]
+        produces:
+          - {type: datasets, name: sample-prompts-v1}
+          - {type: evaluators, name: quality-evaluator-v1}
+        consumes: []
+      - id: "03-optimize-skills"
+        title: Optimize with Foundry skills + Copilot
+        loop_node: optimize
+        time_min: 30
+        prereqs: ["core/02-evaluate-portal"]
+        produces:
+          - {type: prompts, name: prompt-agent-optimized-v1}
+        consumes:
+          - {type: datasets, name: sample-prompts-v1}
+          - {type: evaluators, name: quality-evaluator-v1}
+      - id: "04-monitor-portal"
+        title: Monitor and trace outcomes
+        loop_node: monitor
+        time_min: 15
+        prereqs: ["core/03-optimize-skills"]
+        produces: []
+        consumes: [{type: prompts, name: prompt-agent-optimized-v1}]
+      - id: "05-capstone-hosted"
+        title: Capstone — apply the loop to the Hosted Agent
+        loop_node: optimize
+        time_min: 30
+        prereqs: ["core/04-monitor-portal"]
+        produces: []
+        consumes: []
+
+  - id: more
+    title: More Labs — deep dives
+    goal: Extensible, single-question labs against the deployed agents.
+    labs:
+      - id: "troubleshooting"
+        title: Troubleshoot a failing trace
+        loop_node: monitor
+        time_min: 20
+        prereqs: ["core/04-monitor-portal"]
+        produces: []
+        consumes: []
+      - id: "red-teaming"
+        title: Red-team your agent
+        loop_node: protect
+        time_min: 30
+        prereqs: ["core/04-monitor-portal"]
+        produces: []
+        consumes: []
+      - id: "continuous-eval"
+        title: Set up continuous evaluation
+        loop_node: evaluate
+        time_min: 25
+        prereqs: ["core/04-monitor-portal"]
+        produces: []
+        consumes: []
+      - id: "trace-driven-datasets"
+        title: Build datasets from real traces
+        loop_node: evaluate
+        time_min: 20
+        prereqs: ["core/04-monitor-portal"]
+        produces:
+          - {type: datasets, name: trace-derived-v1}
+        consumes: []
+
+# Data files that ship with the course
+data:
+  - {name: flights,      path: data/flights.csv}
+  - {name: hotels,       path: data/hotels.csv}
+  - {name: car_rentals,  path: data/car_rentals.csv}
+
+# Coach configuration
+coach:
+  agent_file: .github/agents/workshop-coach.agent.md
+  progress_file: ~/.contoso-coach/progress.json
+  skills:
+    - .github/agents/skills/progress-tracker.md
+    - .github/agents/skills/lab-guide.md
+    - .github/agents/skills/verify-check.md
+    - .github/agents/skills/bookmark.md
+    - .github/agents/skills/explore-suggest.md
+    - .github/agents/skills/resume.md
