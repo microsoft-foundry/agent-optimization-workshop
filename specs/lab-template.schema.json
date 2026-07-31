@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Lab template",
+  "description": "Every lab file in labs/{fundamentals,core,more}/ must contain these sections and callouts.",
+  "type": "object",
+  "required": [
+    "h1_title",
+    "goal_section",
+    "where_this_fits_section",
+    "steps_section",
+    "verify_section",
+    "recap_section",
+    "next_section"
+  ],
+  "properties": {
+    "h1_title": {
+      "type": "string",
+      "description": "Top-level heading naming the lab.",
+      "pattern": "^Lab \\S"
+    },
+    "goal_section":            { "type": "string", "pattern": "🎯" },
+    "where_this_fits_section": { "type": "string", "pattern": "🧭" },
+    "steps_section":           { "type": "string", "pattern": "📋" },
+    "verify_section":          { "type": "string", "pattern": "✅" },
+    "recap_section":           { "type": "string", "pattern": "🧠" },
+    "next_section":            { "type": "string", "pattern": "➡️" }
+  }
+}

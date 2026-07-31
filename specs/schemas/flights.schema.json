@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "flights.csv row",
+  "type": "object",
+  "required": ["flight_id","airline","origin","destination","departure_date","departure_time","arrival_time","price_usd","cabin_class","available_seats"],
+  "properties": {
+    "flight_id":        { "type": "string", "pattern": "^CT-FL-\\d{3,}$" },
+    "airline":          { "type": "string", "minLength": 1 },
+    "origin":           { "type": "string", "minLength": 1 },
+    "destination":      { "type": "string", "minLength": 1 },
+    "departure_date":   { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "departure_time":   { "type": "string" },
+    "arrival_time":     { "type": "string" },
+    "price_usd":        { "type": "string", "pattern": "^\\d+(\\.\\d+)?$" },
+    "cabin_class":      { "type": "string", "enum": ["Economy","Business","First","Premium Economy"] },
+    "available_seats":  { "type": "string", "pattern": "^\\d+$" }
+  }
+}

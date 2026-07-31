@@ -1,0 +1,4 @@
+# Test-time dependencies for spec verification.
+pytest>=7.0
+PyYAML>=6.0
+jsonschema>=4.0

@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "prompt artifact",
+  "type": "object",
+  "required": ["agent_name", "instructions"],
+  "properties": {
+    "agent_name":   { "type": "string", "minLength": 1 },
+    "version":      { "type": "string" },
+    "instructions": { "type": "string", "minLength": 20 },
+    "notes":        { "type": "string" }
+  }
+}

@@ -1,0 +1,41 @@
+{
+    "name": "Contoso Travel Concierge Workshop",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
+    },
+    "remoteUser": "vscode",
+    "postCreateCommand": "bash .devcontainer/post-create.sh",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-azuretools.vscode-docker",
+                "ms-azuretools.vscode-azurecontainerapps",
+                "ms-azuretools.vscode-bicep",
+                "github.copilot",
+                "github.copilot-chat",
+                "github.vscode-github-actions",
+                "davidanson.vscode-markdownlint",
+                "bierner.markdown-mermaid",
+                "redhat.vscode-yaml"
+            ],
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "python.testing.pytestEnabled": true,
+                "python.testing.pytestArgs": ["tests"],
+                "files.trimTrailingWhitespace": true,
+                "files.insertFinalNewline": true
+            }
+        }
+    },
+    "forwardPorts": [],
+    "remoteEnv": {
+        "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "mounts": [
+        // Persist coach progress between container rebuilds
+        "source=${localWorkspaceFolderBasename}-coach,target=/home/vscode/.contoso-coach,type=volume"
+    ]
+}
