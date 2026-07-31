@@ -263,6 +263,29 @@ never rewrites of `main`.
 
 ## Common maintenance tasks
 
+### Triaging `lab-idea` issues
+
+Learners and maintainers file lab suggestions and questions via the
+[**💡 Lab idea or learner question**](../../issues/new/choose) issue form
+(defined at `.github/ISSUE_TEMPLATE/lab-idea-or-question.yml`). Recommended
+cadence: **monthly triage**.
+
+Suggested flow:
+
+1. Filter open issues by `label:lab-idea`.
+2. Group by the `loop_node` and `agent_type` answers.
+3. For each candidate, decide:
+   - **Promote** — worth becoming a More Lab. Assign a maintainer, add label
+     `promoted`, and follow [Add a new More Lab](#add-a-new-more-lab). Link
+     the issue from the lab's `🧠 Recap` or footer, and reference the lab
+     from the issue before closing.
+   - **Merge** — duplicate of another idea. Close referencing the primary.
+   - **Defer** — good idea but not now. Label `backlog`.
+   - **Decline** — out of scope. Close with a friendly explanation.
+4. Answer any pure-question issues with a coach-style pointer (link to lab
+   or docs) — do **not** paste the answer wholesale; the coach contract
+   applies to maintainers replying to learners too.
+
 ### Add a new More Lab
 
 1. Add entry under `phases.more.labs` in `specs/course.yaml`.

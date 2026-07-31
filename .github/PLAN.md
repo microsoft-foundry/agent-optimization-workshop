@@ -265,3 +265,48 @@ Ships from day one for a reproducible dev environment.
   smoke check
 - **`.devcontainer/devcontainer.json`** — VS Code extensions, coach progress
   volume mount at `~/.contoso-coach`
+
+---
+
+## Progress tracking
+
+Coverage against the two source workshops
+(`Azure-Samples/microsoft-foundry-e2e-agent-observability-workshop` = **Obs**,
+`microsoft/Build26-LAB540` = **LAB540**). Update this table as we ship.
+
+Legend: ✅ complete · 🟡 stub/partial · ❌ not started · – not applicable
+
+| Area | Obs | LAB540 | This repo | Notes |
+|---|:---:|:---:|:---:|---|
+| Scenario + data (unified) | ✅ | ✅ | ✅ | Contoso Travel Concierge; CSVs + reference datasets shipped |
+| azd provisioning | – | ✅ | 🟡 | `fundamentals/01-provision-azd.md` — body TODO |
+| Portal provisioning | ✅ | – | 🟡 | `fundamentals/02-provision-portal.md` — body TODO |
+| Model deployment | ✅ | ✅ | 🟡 | `fundamentals/03-deploy-models.md` — body TODO |
+| Prompt Agent creation | ✅ | – | 🟡 | `fundamentals/04-create-prompt-agent.md` — body TODO |
+| Hosted Agent source (`src/` + `src.original/`) | – | ✅ | ❌ | main.py, agent.yaml, Dockerfile, instructions/ — not ported |
+| Hosted Agent deploy lab | – | ✅ | 🟡 | `fundamentals/05-deploy-hosted-agent.md` — body TODO |
+| Bicep infra (`infra/`) | – | ✅ | ❌ | main.bicep, params, core/ — not ported |
+| Fundamentals verify lab | – | – | 🟡 | `fundamentals/06-verify.md` — body TODO |
+| Core: observability in portal | ✅ | partial | 🟡 | `core/01-observe-portal.md` — body TODO |
+| Core: evaluation | ✅ | – | 🟡 | `core/02-evaluate-portal.md` — body TODO |
+| Core: optimize with Foundry Skills | ✅ | – | 🟡 | `core/03-optimize-skills.md` — body TODO |
+| Core: monitoring | ✅ | ✅ | 🟡 | `core/04-monitor-portal.md` — body TODO |
+| Core: capstone on hosted agent | – | – | 🟡 | `core/05-capstone-hosted.md` — depends on hosted-src port |
+| More: red-teaming | ✅ | – | 🟡 | `labs/more/red-teaming.md` — body TODO |
+| More: troubleshooting | partial | partial | 🟡 | `labs/more/troubleshooting.md` — body TODO |
+| More: continuous evaluation | ✅ | – | 🟡 | `labs/more/continuous-eval.md` — body TODO |
+| More: trace-driven datasets | ✅ | – | 🟡 | `labs/more/trace-driven-datasets.md` — body TODO |
+| Screenshots | ✅ | ✅ | ❌ | Every lab has `<!-- TODO(nitya): screenshot -->` markers |
+| Workshop-coach agent | – | – | ✅ | Contract + 6 skills; passes tests |
+| Specs + tests + CI | – | – | ✅ | 14 pytest tests, GH Actions verify-course.yml |
+| Devcontainer | – | – | ✅ | Python 3.13 bookworm + az/azd/gh + coach volume |
+| Reproducibility (`reset.sh`, `use-reference.sh`) | – | – | ✅ | Scripts + reference artifacts |
+| Issue template for lab ideas | – | – | ✅ | `.github/ISSUE_TEMPLATE/lab-idea-or-question.yml` |
+| Maintainers guide | – | – | ✅ | `.github/MAINTAINERS.md` |
+| Rebrand pass (Zava → Contoso) | – | – | ✅ | Applied to data + reference artifacts; pending for src/ + infra |
+
+### Next-up order
+
+1. **Port hosted-agent source** from LAB540 into `src/` and mirror to `src.original/` (rebranded).
+2. **Port `infra/`** bicep + parameters from LAB540 (rebranded).
+3. **Fill lab bodies** in the order learners hit them (fundamentals → core → more), leaving `<!-- TODO(nitya): ... -->` for screenshots and any live values that need learner-specific input.
