@@ -85,5 +85,5 @@ If you can answer all three, you're ready to provision.
 
 Choose one:
 
-- Self-guided → **[Lab 01 — Provision with `azd`](./01-provision-azd.md)**
+- Code-first → **[Lab 01 — Provision with `azd`](./01-provision-azd.md)**
 - UI-first → **[Lab 02 — Provision with the portal](./02-provision-portal.md)**

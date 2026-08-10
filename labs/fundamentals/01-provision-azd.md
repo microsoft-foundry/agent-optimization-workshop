@@ -134,20 +134,26 @@ Confirm you have:
    > are **not** provisioned in this lab — you enable and create them when you
    > deploy the hosted agent in [Lab 05](./05-deploy-hosted-agent.md).
 
-   <!-- TODO(nitya): screenshot of a successful `azd provision` output with the project endpoint -->
+   <!-- DONE: screenshot of a successful `azd provision` output with the project endpoint replaced by code-fenced output above -->
 
 5. **Read the outputs.**
-   The tail of `azd provision` prints the **Foundry project endpoint** and
-   related environment values. Copy the endpoint into your notes — you'll use
-   it in every later lab. (The agent name and playground link appear once you
-   deploy the hosted agent in [Lab 05](./05-deploy-hosted-agent.md).)
+   The tail of `azd provision` prints the link to the deployed resource group in the Azure Portal. Click to visit the portal - you should see a resource group, with provisioned Foundry project and other resources as shown.
 
-> 💡 **Tip:** `azd env get-values` prints everything `azd` knows about your
-> environment. Later labs use this to pick up endpoints automatically.
->
-> ⚠️ **Gotcha:** if `azd provision` fails on quota, retry in a different region
-> from the list above using `azd env set AZURE_LOCATION swedencentral` then
-> `azd provision` again.
+   ![Provisioned `rg-contoso-travel` resource group in the Azure Portal](./images/01-provision-infra-01.png)
+
+6. **Visit the Foundry portal.**
+   From the resource group, click into the **Foundry** (`ai-account-xxx`) resource — the overview blade has a **Go to Foundry portal** button in the top toolbar that jumps you straight into your project in the Foundry portal, no separate URL required.
+
+   ![Go to Foundry portal button on the Foundry resource overview](./images/01-provision-infra-02.png)
+
+7. **Explore the Foundry project.**
+   You'll land in the **new Microsoft Foundry portal** — confirm the **New Foundry** toggle in the top-right is **on** (the classic view hides most of what we use later). The top nav reflects the developer journey from **Discover** and **Build**, to **Operate** and **Manage**; we'll spend most of the workshop in the **Build** tab (agents, models, prompts). Note that the project Homepage has handy links to the Foundry **endpoint** and **API key** values that you may need later. You can also get these directly using `azd env get-values` - when you provision with azd.  Later labs use this to pick up endpoints automatically.
+
+   ![New Microsoft Foundry portal — New Foundry toggle on, Build tab highlighted, endpoint and API key visible on the overview](./images/01-provision-infra-03.png)
+
+   > ⚠️ **Gotcha:** if `azd provision` fails on quota, retry in a different region
+   > from the list above using `azd env set AZURE_LOCATION swedencentral` then
+   > `azd provision` again.
 
 ## ✅ Verify
 
@@ -196,8 +202,7 @@ Application Insights, and a Log Analytics workspace.
 
 ## ➡️ Next
 
-**[Lab 03 — Deploy required models](./03-deploy-models.md)** to confirm the
-model deployment came up, or jump ahead to
+**[Lab 03 — Deploy required models](./03-deploy-models.md)** to verify model deployments succeeded, or jump ahead to
 **[Lab 05 — Deploy the hosted agent](./05-deploy-hosted-agent.md)** to ship the
 container.
 

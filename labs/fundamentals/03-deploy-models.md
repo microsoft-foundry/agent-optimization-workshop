@@ -63,6 +63,13 @@ flowchart LR
 > azd env set AI_PROJECT_DEPLOYMENTS '[{"name":"gpt-5.4-mini","model":{"name":"gpt-5.4-mini","format":"OpenAI","version":"2026-03-17"},"sku":{"name":"GlobalStandard","capacity":100}},{"name":"gpt-5.4-judge","model":{"name":"gpt-5.4","format":"OpenAI","version":"2026-03-05"},"sku":{"name":"GlobalStandard","capacity":100}}]'
 > azd provision
 > ```
+>
+> ⚠️ **Known limitation:** once this override is set, later re-provisions
+> (e.g. enabling hosted agents in [Lab 05](./05-deploy-hosted-agent.md)) fail
+> with `invalid character 'n' after object key:value pair` — azd 1.30 doesn't
+> escape the JSON when it substitutes into the Bicep parameters file. Clear it
+> before re-provisioning (`azd env set AI_PROJECT_DEPLOYMENTS "[]"`). Tracked
+> as `TODO(nitya)` in [`infra/main.bicep`](../../infra/main.bicep).
 
 **If you provisioned with the portal (Lab 02):**
 

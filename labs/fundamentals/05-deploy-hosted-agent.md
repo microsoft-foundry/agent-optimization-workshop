@@ -53,6 +53,21 @@ host). You'll enable both below.
    ```
    This adds the registry + capability host to your existing resource group.
 
+   > ⚠️ **Gotcha — `invalid character 'n' after object key:value pair`.**
+   > `azd provision` fails when your env has a custom `AI_PROJECT_DEPLOYMENTS`
+   > (or `AI_PROJECT_CONNECTIONS` / `_CREDENTIALS` / `_DEPENDENT_RESOURCES`)
+   > JSON value set — azd 1.30 doesn't escape the quotes when it substitutes
+   > it into the Bicep parameters file. Clear it and re-run; the defaults in
+   > `infra/main.bicep` still deploy `gpt-5.4-mini` + `gpt-5.4-judge`:
+   >
+   > ```bash
+   > azd env set AI_PROJECT_DEPLOYMENTS "[]"
+   > azd provision
+   > ```
+   >
+   > Need a custom deployment list? See the workaround in
+   > [Lab 03](./03-deploy-models.md).
+
 3. **Deploy the hosted agent.**
    ```bash
    azd deploy contoso-travel-concierge
@@ -116,6 +131,24 @@ host). You'll enable both below.
 >
 > The new env name changes the `uniqueString()` hash used by the infra, which
 > gives you a genuinely fresh Foundry project and clears the cache.
+
+> ⚠️ **Gotcha — 404 "Subdomain does not map to a resource" on `azd deploy`.**
+> The Foundry agents data plane returns `RESPONSE 404: ResourceNotFound —
+> Subdomain does not map to a resource` when the caller's bearer token is
+> expired or revoked (typical trigger: `AADSTS50173` — a password change,
+> credential rotation, or Conditional Access policy moved `TokensValidFrom`
+> past your issued-at time). The account is fine; auth is stale. `azd deploy`
+> uses its own token cache separate from `az`, so **both** must be refreshed:
+>
+> ```bash
+> az logout && az login --tenant <your-tenant-id>
+> azd auth logout && azd auth login --tenant-id <your-tenant-id>
+> azd deploy contoso-travel-concierge
+> ```
+>
+> Quick sanity check that the resource itself is healthy (should return `HTTP
+> 200` even unauthenticated):
+> `curl -sS -o /dev/null -w "%{http_code}\n" https://$(azd env get-value AZURE_AI_ACCOUNT_NAME).services.ai.azure.com/`
 
 ## Redeploying after a code change
 

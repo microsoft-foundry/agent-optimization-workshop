@@ -40,6 +40,14 @@ param aiFoundryResourceName string = ''
 param aiFoundryProjectName string = 'ai-project-${environmentName}'
 
 @description('List of model deployments')
+// TODO(nitya): The four *Json params below are strings that hold JSON, because
+// main.parameters.json substitutes `"${AI_PROJECT_DEPLOYMENTS=[]}"` (quoted).
+// azd 1.30 does not escape embedded `"` on substitution, so any non-empty
+// override crashes provisioning with `invalid character 'n' after object
+// key:value pair`. Structural fix: change these to `array`/`object` params,
+// drop the `json()` calls below, and update main.parameters.json to substitute
+// without surrounding quotes (`"value": ${AI_PROJECT_DEPLOYMENTS=[]}`). Until
+// then, users must keep the override empty — see Lab 03/05 gotcha callouts.
 param aiProjectDeploymentsJson string = '[]'
 
 @description('List of connections')

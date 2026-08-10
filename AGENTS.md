@@ -75,6 +75,26 @@ maintainer follow-ups (screenshots, exact commands, model pinning, etc.).
   manage hosted agents but has no create flow — `azd deploy` is the only
   supported creation path today. Do not add "portal path" instructions for
   hosted agents unless the portal ships that flow.
+- **`azd provision` fails with `invalid character 'n' after object key:value
+  pair`.** The four `*Json` params in `infra/main.parameters.json` are
+  quoted-string substitutions (e.g. `"value": "${AI_PROJECT_DEPLOYMENTS=[]}"`)
+  and azd 1.30 does not JSON-escape embedded `"` on substitution. Any non-empty
+  override (e.g. a user-supplied `AI_PROJECT_DEPLOYMENTS` array) breaks the
+  parameters file. Workaround: `azd env set AI_PROJECT_DEPLOYMENTS "[]"` and
+  re-provision — the defaults in `infra/main.bicep` still deploy
+  `gpt-5.4-mini` + `gpt-5.4-judge`. Structural fix (`TODO(nitya)` in
+  `infra/main.bicep`): change the four params to `array`/`object` types, drop
+  the `json()` calls, and substitute without surrounding quotes. Kept in sync
+  with Lab 03 + Lab 05 gotcha callouts.
+- **`azd deploy` fails with `RESPONSE 404: ResourceNotFound — Subdomain does
+  not map to a resource`.** The Foundry agents data plane returns 404 (not
+  401) when the caller's bearer token is expired or revoked — typically
+  `AADSTS50173` after a password change, credential rotation, or Conditional
+  Access policy update. The account is fine; auth is stale. `azd` and `az`
+  cache tokens independently, so both must be refreshed: `az logout && az
+  login --tenant <id>` then `azd auth logout && azd auth login --tenant-id
+  <id>`, then re-run `azd deploy`. Kept in sync with the Lab 05 gotcha
+  callout.
 
 ## Tests
 
