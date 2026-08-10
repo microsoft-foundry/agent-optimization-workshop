@@ -52,7 +52,38 @@ param aiProjectConnectionCredentialsJson string = '{}'
 @description('List of resources to create and connect to the AI project')
 param aiProjectDependentResourcesJson string = '[]'
 
-var aiProjectDeployments = json(aiProjectDeploymentsJson)
+// Golden-path default: deploy the concierge model (gpt-5.4-mini) and a separate
+// judge deployment on gpt-5.4 (used by AI-assisted evaluators in Core Lab 02)
+// automatically so `azd up` needs no portal model step. Override by setting
+// AI_PROJECT_DEPLOYMENTS to a custom JSON array to use different models.
+var providedAiProjectDeployments = json(aiProjectDeploymentsJson)
+var defaultAiProjectDeployments = [
+  {
+    name: 'gpt-5.4-mini'
+    model: {
+      name: 'gpt-5.4-mini'
+      format: 'OpenAI'
+      version: '2026-03-17'
+    }
+    sku: {
+      name: 'GlobalStandard'
+      capacity: 100
+    }
+  }
+  {
+    name: 'gpt-5.4-judge'
+    model: {
+      name: 'gpt-5.4'
+      format: 'OpenAI'
+      version: '2026-03-05'
+    }
+    sku: {
+      name: 'GlobalStandard'
+      capacity: 100
+    }
+  }
+]
+var aiProjectDeployments = empty(providedAiProjectDeployments) ? defaultAiProjectDeployments : providedAiProjectDeployments
 var aiProjectConnections = json(aiProjectConnectionsJson)
 var aiProjectConnectionCreds = json(aiProjectConnectionCredentialsJson)
 var aiProjectDependentResources = json(aiProjectDependentResourcesJson)
@@ -88,7 +119,7 @@ param existingApplicationInsightsResourceId string = ''
 param existingAppInsightsConnectionName string = ''
 
 // Tags that should be applied to all resources.
-// 
+//
 // Note that 'azd-service-name' tags should be applied separately to service host resources.
 // Example usage:
 //   tags: union(tags, { 'azd-service-name': <service name in azure.yaml> })
@@ -183,6 +214,14 @@ output AZURE_AI_PROJECT_ID string = useExistingAiProject ? existingAiProject.out
 output AZURE_AI_FOUNDRY_PROJECT_ID string = useExistingAiProject ? existingAiProject.outputs.projectId : aiProject.outputs.projectId
 output AZURE_AI_ACCOUNT_NAME string = useExistingAiProject ? existingAiProject.outputs.aiServicesAccountName : aiProject.outputs.aiServicesAccountName
 output AZURE_AI_PROJECT_NAME string = useExistingAiProject ? existingAiProject.outputs.projectName : aiProject.outputs.projectName
+
+// Primary model deployment name (first entry in the deployments list). Consumed by
+// the hosted agent and referenced in labs/fundamentals/03-deploy-models.md.
+output AZURE_AI_MODEL_DEPLOYMENT_NAME string = length(aiProjectDeployments) > 0 ? aiProjectDeployments[0].name : ''
+
+// Judge model deployment name (second entry, if present). Used by AI-assisted
+// evaluators in Core Lab 02.
+output AZURE_AI_JUDGE_DEPLOYMENT_NAME string = length(aiProjectDeployments) > 1 ? aiProjectDeployments[1].name : ''
 
 // Endpoints
 output AZURE_AI_PROJECT_ENDPOINT string = useExistingAiProject ? existingAiProject.outputs.AZURE_AI_PROJECT_ENDPOINT : aiProject.outputs.AZURE_AI_PROJECT_ENDPOINT

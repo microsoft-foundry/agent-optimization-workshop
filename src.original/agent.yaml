@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/microsoft/AgentSchema/refs/heads/main/schemas/v1.0/ContainerAgent.yaml
 
 kind: hosted
-name: contoso-concierge
+name: contoso-travel-concierge
 description: |
   Contoso Travel Concierge — a Microsoft Agent Framework orchestrator that delegates
   to Flight, Hotel, and Car Rental specialist agents to plan complete itineraries
@@ -15,7 +15,7 @@ metadata:
         - Streaming
 protocols:
     - protocol: responses
-      version: 1.0.0
+      version: 2.0.0
 resources:
     cpu: "0.25"
     memory: 0.5Gi

@@ -42,7 +42,7 @@ The best next test case is the one you just barely got away with in prod.
 
    <!-- TODO(nitya): confirm and paste the KQL you standardize on. Suggestion:
         traces
-        | where cloud_RoleName == "contoso-concierge"
+        | where cloud_RoleName == "contoso-travel-concierge"
         | where customDimensions.evaluator_groundedness < 0.5
         | project timestamp, input=customDimensions.user_input, output=customDimensions.assistant_response
         | take 100

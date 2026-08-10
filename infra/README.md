@@ -24,8 +24,11 @@ If you're following the **portal path** instead
 - Naming derives from the `azd` environment name; abbreviations come from
   `abbreviations.json`. This keeps every resource under a single prefix so
   cleanup is one `azd down` away.
-- Model deployment is **not** provisioned by this template on purpose.
-  Learners deploy models in `labs/fundamentals/03-deploy-models.md` so they
-  learn the model-picker flow.
+- Model deployment **is** provisioned by this template. The golden path
+  auto-deploys **`gpt-5.4-mini`** (concierge) and **`gpt-5.4`** as
+  `gpt-5.4-judge` (both Global Standard, 100k TPM) so the `azd up` path needs
+  no portal step. To use different models, set the `AI_PROJECT_DEPLOYMENTS` env
+  var to a custom JSON array before `azd up` (see
+  `labs/fundamentals/03-deploy-models.md`).
 
 <!-- TODO(nitya): confirm region + SKU choices for the models you standardize on. -->

@@ -46,7 +46,7 @@ This question:
    <!-- TODO(nitya): screenshot of the Prompt Agent playground response -->
 
 2. **Ask the Hosted Agent.**
-   Portal → **My assets → Agents → `contoso-concierge` → Try in playground**
+   Portal → **My assets → Agents → `contoso-travel-concierge` → Try in playground**
    → paste the same question.
 
    Expected: a grounded answer plus a **trace** in the right pane showing the

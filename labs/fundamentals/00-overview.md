@@ -54,6 +54,17 @@ Travel Concierge** orchestrates specialist sub-agents that read three CSVs:
 Every Core Lab targets one node of the loop. Together they teach the complete
 cycle you'll run whenever the agent underperforms.
 
+| Node | What happens here |
+|------|-------------------|
+| **Plan** | Define the scenario, success criteria, and target cost/latency/quality metrics. |
+| **Build** | Create the agent — model, instructions, and tools. |
+| **Evaluate** | Assess quality, performance, and safety with built-in and custom metrics. |
+| **Deploy** | Publish the agent to an endpoint you can call from a UI or code. |
+| **Monitor** | Trace runs and watch production behavior at scale with Application Insights. |
+| **Optimize** | Tune instructions, model, or tools to close gaps against the targets, then re-evaluate. |
+| **Protect** | Guard against unsafe or adversarial inputs (red-teaming, guardrails) before re-evaluating. |
+
+
 ## ✅ Verify
 
 Answer these to yourself (no tool required):
