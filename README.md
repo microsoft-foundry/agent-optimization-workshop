@@ -1,4 +1,23 @@
 <div align="center">
+<table width="100%">
+<tr>
+<td<div style="background:#111111;color:#f2c200;padding:16px;margin:4px;border-radius:6px;font-family:sans-serif;">
+
+🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛
+
+### 🚧 Work in Progress 🚧
+
+**This workshop is under active development and testing.**. <br/>
+Please wait till this banner is removed before using it for self-guided or instructor-led delivery.
+
+🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛
+
+</div></td>
+</tr>
+</table>
+</div>
+
+<div align="center">
 
 # Build, Evaluate & Optimize AI Agents with Microsoft Foundry & GitHub Copilot
 
@@ -6,24 +25,22 @@
 
 </div>
 
-> ⚠️ **Fictional scenario.** The Contoso Travel Concierge agent, its dataset
-> (flights, hotels, car rentals), and all company names used in this workshop
-> are entirely **fictitious** and created for educational purposes only. They
-> do not represent — and should not be interpreted as representing — any real
-> travel provider, product, price, or availability.
 
-> 🤖 **Built with coding agents + human-in-the-loop.** This workshop was
-> developed collaboratively using AI coding agents (GitHub Copilot and related
-> tools) under continuous human oversight and review. All content, code,
-> datasets, and pedagogy have been curated and validated by a human maintainer
-> before publication. Contributions follow the same process.
+
+> **Scenario.** Contoso is a fictitious enterprise retail company serving customers worldwide. Contoso Travel Concierge is their internal travel planning tool, used by employees to book flights, cars and hotels - and manage expenses - while ensuring they are in compliance with company travel policies.
+>
+> **Workshop.** This workshop was built with the help of coding agents grounded in our docs, with human oversight and review for correctness and consistency. If you find any discrepancies or have questions, [please file an appropriate issue](https://github.com/microsoft-foundry/agent-optimization-workshop/issues) for our attention.
+
+<br/>
 
 ## Overview
 
-A hands-on course that walks you through the full **Agent DevOps loop** on
-Microsoft Foundry — from provisioning to deployment to continuous optimization
-— using a single running scenario: the **Contoso Travel Concierge**, a
-fictitious multi-agent travel assistant.
+Building an AI agent on Microsoft Foundry can be fairly straightforward. Create a new project, deploy a relevant model, configure agent instructions and tools - then deploy it to get an endpoint you can send requests to (from a UI-based playground or a code-based client).
+
+But agent behaviors can be non-deterministic. Building reliable agents - that meet required cost, latency and quality targets - requires end-to-end observability. Start with evaluations that assess the quality, performance and safety of your agent with built-in and custom metrics. Use tracing (logs) to debug issues and build your intuition for where your agent incurs cost and latency. And use application insights to understand your agent performance in production, at scale.
+
+Real-world deployments can also help identify agent drift from the desired performance targets. For instance, models may evolve or new edge cases may be revealed from actual usage. Keeping your agent operating correctly while consistemtly meeting desired criteria - requires _continuous optimization_, reflected by the **Agent DevOps loop** shown below.
+
 
 ```mermaid
 flowchart LR
@@ -33,6 +50,9 @@ flowchart LR
     Monitor --> Protect([Protect]) --> Evaluate
 ```
 
+This repository provides a series of hands-on labs that walks you through this loop on Microsoft Foundry — from provisioning to deployment to continuous optimization — usingthe **Contoso Travel Concierge** multi-agent scenario.
+
+
 The course is organized in three phases:
 
 | Phase | What you do | Time |
@@ -41,30 +61,50 @@ The course is organized in three phases:
 | **Core Labs** | Observe → Evaluate → Optimize → Monitor on the Prompt Agent; capstone on the Hosted Agent | ~90 min |
 | **More Labs** | Single-question deep dives against the deployed agents | 20–30 min each |
 
-A repo-scoped [**workshop-coach**](./.github/agents/workshop-coach.agent.md)
-GitHub Copilot agent supports self-guided learners — it tracks your progress,
-guides you through the next step, and never does the task for you.
 
-Full course design lives in [**`.github/PLAN.md`**](./.github/PLAN.md).
+> **EXPERIMENTAL**: <br/>
+> The repository is configured with a [**workshop-coach**](./.github/agents/workshop-coach.agent.md) agent (using GitHub Copilot) that self-guided learners can use to ask for explanations or debug issues, without losing track of their progress. The coach guides you through the next step but never does the task for you, so you learn by doing.
+
+<br/>
 
 ## Quickstart
 
-The fastest path from zero to running the first lab:
+The repository is configured with a [`.devcontainer/`](./.devcontainer/) that defines the default Python environment and dependencies required to run the exercises. The fastest way to get started and running your first lab is:
 
-1. **Open in a Codespace or Dev Container.** The [`.devcontainer/`](./.devcontainer/)
-   provisions Python 3.13, `az`, `azd`, `gh`, and coach state persistence.
-2. **Install workshop deps** (post-create runs this automatically):
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. **Open [`labs/fundamentals/00-overview.md`](./labs/fundamentals/00-overview.md)**
-   and follow the trail.
+1. **Fork the repo** to your profile to get a sandbox you can modify
+1. **Launch the Dev Container** using GitHub Codespaces (browser) or Docker Desktop (device)
 
-Prefer local setup? You need Python 3.11+, `az`, `azd`, and `gh` on your PATH.
+This should automatically invoke the scripts to install Python dependencies, update required tooling, and initialize environment for lab execution. Wait till you see an active VS Code terminal - and use these commands to verify installation status.
+
+```bash
+# Python 3.13+
+python --version
+
+# Azure CLI ("azure-cli": "2.89.0" or higher)
+az version
+
+# Azure Developer CLI (azd version 1.30.0  or higher)
+azd version
+
+# GitHub Copilot CLI (GitHub Copilot CLI 1.0.78. or higher)
+copilot version
+
+# GitHub CLI (gh version 2.97.0 or higher)
+gh --version
+```
+
+> Prefer local setup? Create a virtual environment and install the tools manually. You will need Python 3.13+, `az`, `azd`, `copilot` and `gh` on your PATH.
+
+You are ready to get started on the first lab.
+- **Open [`labs/fundamentals/00-overview.md`](./labs/fundamentals/00-overview.md)**
+   and follow the trail from there.
+
+
+<br/>
 
 ## Core Labs
 
-Every lab teaches **one node** of the Agent DevOps loop. Complete them in order.
+The core labs track takes you through the steps of the Agent DevOps loop using our Contoso Travel Concierge scenario. Every lab teaches **one node** of the Agent DevOps loop. Complete them in order.
 
 | # | Lab | Loop node |
 |---|-----|-----------|
@@ -77,9 +117,11 @@ Every lab teaches **one node** of the Agent DevOps loop. Complete them in order.
 
 Fundamentals prerequisites: [`labs/fundamentals/`](./labs/fundamentals/).
 
+<br/>
+
 ## More Labs
 
-Extensible library of one-question deep dives — take in any order after Core.
+This section provides an evolving library of labs that offer "one-question deep dives". You should be able to explore them in any order once you complete the Core Labs. Watch for frequent updates to this section to learn new features or best practies.
 
 | # | Lab | Loop node |
 |---|-----|-----------|
@@ -89,19 +131,8 @@ Extensible library of one-question deep dives — take in any order after Core.
 | 4 | [Datasets from real traces](./labs/more/trace-driven-datasets.md) | Evaluate |
 | … | … see [`labs/more/README.md`](./labs/more/README.md) for the full index | |
 
-## Contributing
-
-This is a **living resource**. When you propose a change:
-
-1. Update [`.github/PLAN.md`](./.github/PLAN.md) with the intent
-2. Update the relevant spec in [`specs/`](./specs/) so tests know the new truth
-3. Update or add tests in [`tests/`](./tests/)
-4. Implement the change
-5. `pytest -q` passes → open a PR
-
-CI runs the spec suite on every PR
-([`.github/workflows/verify-course.yml`](./.github/workflows/verify-course.yml)).
+<br/>
 
 ## Feedback
 
-Issues and PRs welcome. See [`LICENSE`](./LICENSE) for terms.
+Have questions, contributions or feedback? Watch for updates to the [CONTRIBUTING](./CONTRIBUTING.md) guide.

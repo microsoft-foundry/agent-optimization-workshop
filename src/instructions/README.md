@@ -43,7 +43,7 @@ prompt.
 4. Redeploy the agent so the new prompt is live:
 
    ```bash
-   azd deploy contoso-concierge --no-prompt
+   azd deploy contoso-travel-concierge --no-prompt
    ```
 
 5. Re-run the evaluation and compare against the previous run.

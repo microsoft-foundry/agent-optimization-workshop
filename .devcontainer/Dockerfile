@@ -1,4 +1,4 @@
-# Contoso Travel Concierge Workshop — dev container image.
+# Agent Optimization Workshop — dev container image.
 #
 # Base image is pinned here so we can customize freely later (system packages,
 # CLIs, tools) without touching devcontainer.json. Post-create actions (env
@@ -12,7 +12,12 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 # System tools we use across labs: curl (already present), jq (parsing outputs),
 # git (already present), zip/unzip (bundling artifacts).
-RUN apt-get update && apt-get install -y --no-install-recommends \
+#
+# The base image pre-configures the Yarn apt repo, whose signing key has since
+# rotated and now breaks `apt-get update` (NO_PUBKEY 62D54FD4003F6525). We don't
+# use Yarn, so remove that source before updating.
+RUN rm -f /etc/apt/sources.list.d/yarn.list /usr/share/keyrings/yarn*.gpg \
+    && apt-get update && apt-get install -y --no-install-recommends \
       jq \
       zip \
       unzip \

@@ -248,8 +248,11 @@ guardrail.
 
 ## Open questions
 
-- Exact model list (agent model, evaluator model, embedding?) — decide during
-  Fundamentals authoring
+- ~~Exact model list (agent model, evaluator model, embedding?)~~ **Decided:**
+  concierge `gpt-5.4-mini` (version `2026-03-17`) + judge `gpt-5.4` (version
+  `2026-03-05`), both GlobalStandard, auto-deployed by `azd up`
+  (`infra/main.bicep`). Model region/version/SKU reference:
+  <https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure?pivots=azure-direct-others>
 - Whether to port the LAB540 CSVs as-is (rebranded to Contoso) or curate a
   smaller eval-friendly subset
 

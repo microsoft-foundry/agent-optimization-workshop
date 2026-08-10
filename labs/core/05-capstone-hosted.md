@@ -1,6 +1,6 @@
 # Core Lab 05 — Capstone: apply the loop to the Hosted Agent
 
-> **What you'll do:** Repeat Core Labs 01–04, but this time against the containerized **`contoso-concierge`** hosted agent. You drive it end-to-end.
+> **What you'll do:** Repeat Core Labs 01–04, but this time against the containerized **`contoso-travel-concierge`** hosted agent. You drive it end-to-end.
 > **Time:** ~45 min · **Prerequisites:** [Core Lab 04](./04-monitor-portal.md)
 
 ## 🎯 Goal
@@ -27,7 +27,7 @@ flowchart LR
 |---|---|---|
 | Structure | Single agent + attached knowledge | Concierge + 3 specialist sub-agents + tools |
 | Prompt lives in | Portal Instructions field | `src/instructions/concierge.md` (file, versioned) |
-| Redeploy | Save in portal | `azd deploy contoso-concierge` |
+| Redeploy | Save in portal | `azd deploy contoso-travel-concierge` |
 | Trace | One agent turn | Concierge → specialist → tool, per sub-agent |
 | Reset | Re-paste baseline | `./scripts/reset.sh` |
 
@@ -41,25 +41,25 @@ Do each step yourself. Refer back to the linked lab if you get stuck.
 1. **Reset to the pristine baseline.**
    ```bash
    ./scripts/reset.sh
-   azd deploy contoso-concierge --no-prompt
+   azd deploy contoso-travel-concierge --no-prompt
    ```
 
 2. **Observe.**
    Playground the three prompts from
-   [Core Lab 01](./01-observe-portal.md) against `contoso-concierge`. Open the
+   [Core Lab 01](./01-observe-portal.md) against `contoso-travel-concierge`. Open the
    **Trajectory** view for the multi-part prompt — this is where the Hosted
    Agent shines. Note which sub-agent looks weakest.
 
 3. **Evaluate.**
    Following [Core Lab 02](./02-evaluate-portal.md), run a batch evaluation on
-   `contoso-concierge` against
+   `contoso-travel-concierge` against
    `artifacts/datasets/reference/evaluation-data-v1.jsonl`. Note the top
    failure pattern.
 
 4. **Optimize.**
    Following [Core Lab 03](./03-optimize-skills.md), drive the
    `microsoft-foundry` Observe skill in Copilot Chat against
-   `contoso-concierge`. Let it edit `src/instructions/concierge.md`.
+   `contoso-travel-concierge`. Let it edit `src/instructions/concierge.md`.
 
    > 💡 Snapshot the new prompt into the agent's versioned history:
    >
@@ -69,12 +69,12 @@ Do each step yourself. Refer back to the linked lab if you get stuck.
 
 5. **Redeploy.**
    ```bash
-   azd deploy contoso-concierge --no-prompt
+   azd deploy contoso-travel-concierge --no-prompt
    ```
 
 6. **Monitor.**
    Following [Core Lab 04](./04-monitor-portal.md), open the Monitor tab for
-   `contoso-concierge`. Confirm the optimization landed and metrics moved.
+   `contoso-travel-concierge`. Confirm the optimization landed and metrics moved.
 
 7. **Clean up (when you're truly done).**
    ```bash
@@ -88,7 +88,7 @@ Do each step yourself. Refer back to the linked lab if you get stuck.
 - `src/instructions/concierge.md` differs from
   `src/instructions/versions/instructions-0.md`.
 - `src/instructions/versions/` has at least one new numbered snapshot.
-- A batch re-evaluation of `contoso-concierge` shows the target metric
+- A batch re-evaluation of `contoso-travel-concierge` shows the target metric
   **higher** than the pre-optimization run.
 - You can point at **which sub-agent's behavior changed** (flight, hotel, or
   car rental) based on the trajectory before vs. after.

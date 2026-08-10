@@ -216,7 +216,7 @@ def _build_concierge() -> Agent:
 
     concierge = Agent(
         client=_make_client(),
-        name="contoso-concierge",
+        name="contoso-travel-concierge",
         description="Contoso Travel Concierge — orchestrates flight, hotel, and car rental specialists to plan complete itineraries.",
         instructions=_load_concierge_instructions(),
         tools=[
