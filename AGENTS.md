@@ -63,6 +63,19 @@ casually. The coach must always:
 Use `<!-- TODO(nitya): ... -->` in markdown and `# TODO(nitya):` in code for
 maintainer follow-ups (screenshots, exact commands, model pinning, etc.).
 
+## Known gotchas
+
+- **Foundry hosted-agent 409 on `azd deploy`.** Reusing the same `azd env` name
+  after a torn-down deploy can hit stale server-side state on the Foundry agents
+  data plane, producing `RESPONSE 409: 409 Conflict … modified concurrently`
+  even though `azd ai agent doctor` sees no agent. Recovery: `azd down --purge
+  --force` → `azd env new <different-name>` → `azd provision` → `azd deploy`.
+  Captured in the Lab 05 gotcha callout — keep those two in sync.
+- **Portal cannot *create* hosted agents.** The Foundry portal can view and
+  manage hosted agents but has no create flow — `azd deploy` is the only
+  supported creation path today. Do not add "portal path" instructions for
+  hosted agents unless the portal ships that flow.
+
 ## Tests
 
 Run before opening a PR:

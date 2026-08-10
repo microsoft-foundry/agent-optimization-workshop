@@ -95,9 +95,24 @@ gh --version
 
 > Prefer local setup? Create a virtual environment and install the tools manually. You will need Python 3.13+, `az`, `azd`, `copilot` and `gh` on your PATH.
 
-You are ready to get started on the first lab.
-- **Open [`labs/fundamentals/00-overview.md`](./labs/fundamentals/00-overview.md)**
-   and follow the trail from there.
+
+<br/>
+
+## Fundamentals
+
+The Fundamentals track gets your Foundry substrate, models, and both agents (Prompt + Hosted) provisioned and verified — so you have a **green baseline** before starting the Core Labs. Complete them in order; Labs 01 and 02 are alternative paths (pick one).
+
+| # | Lab | Loop node |
+|---|-----|-----------|
+| 0 | [Course overview & the Agent DevOps loop](./labs/fundamentals/00-overview.md) | Plan |
+| 1 | [Provision Foundry with `azd`](./labs/fundamentals/01-provision-azd.md) _(CLI path)_ | Build |
+| 2 | [Provision Foundry with the Portal](./labs/fundamentals/02-provision-portal.md) _(UI path)_ | Build |
+| 3 | [Deploy the required models](./labs/fundamentals/03-deploy-models.md) | Build |
+| 4 | [Create the Prompt Agent](./labs/fundamentals/04-create-prompt-agent.md) | Build |
+| 5 | [Deploy the Hosted Agent](./labs/fundamentals/05-deploy-hosted-agent.md) | Deploy |
+| 6 | [End-to-end verification](./labs/fundamentals/06-verify.md) | Evaluate |
+
+Start here → **[`labs/fundamentals/00-overview.md`](./labs/fundamentals/00-overview.md)**.
 
 
 <br/>

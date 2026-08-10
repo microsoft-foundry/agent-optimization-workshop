@@ -22,9 +22,9 @@ flowchart LR
 
 ## Before you start
 
-The hosted agent is **not** deployed by `azd up` in Lab 01 — that step only
-provisioned the Foundry substrate and models. Deploying the container is its own
-deliberate step, which is what you do here.
+The hosted agent is **not** deployed by `azd provision` in Lab 01 — that step
+only stands up the Foundry substrate and models. Deploying the container is its
+own deliberate step, which is what you do here.
 
 The hosted agent is declared as a **service** in [`azure.yaml`](../../azure.yaml)
 (`host: azure.ai.agent`). Deploying it needs two things that Lab 01 didn't set
@@ -32,7 +32,7 @@ up: the `azure.ai.agents` **azd extension** (the CLI commands) and the
 **hosted-agent hosting** infrastructure (a container registry + agent capability
 host). You'll enable both below.
 
-## 📋 Steps — deploy with `azd`
+## 📋 Steps
 
 1. **Make sure the hosted-agents extension is installed.**
    The `azd ai agent` commands and hosted `azd deploy` come from the
@@ -46,7 +46,7 @@ host). You'll enable both below.
 
 2. **Enable hosted-agent hosting and provision it.**
    The container registry and agent capability host aren't created by the
-   default `azd up`. Turn them on, then provision:
+   default `azd provision` in Lab 01. Turn them on, then provision:
    ```bash
    azd env set ENABLE_HOSTED_AGENTS true
    azd provision
@@ -95,20 +95,27 @@ host). You'll enable both below.
    In the Foundry portal → **Build → Agents → contoso-travel-concierge → Try in
    playground**. Ask the same question. Same answer, richer trace.
 
-## 📋 Steps — deploying via the portal (portal path only)
+> 🧭 **No portal path?** Correct — the current Foundry portal can **view and
+> manage** hosted agents but does not have a *create* flow for them. `azd
+> deploy` is the one supported way to publish a hosted agent today.
 
-1. **Open the portal → Build → Agents → + New agent → Hosted agent**.
-2. Provide:
-   - **Agent name:** `contoso-travel-concierge`
-   - **Container image:** upload or point to a registry image built from `src/`
-   - **Model deployment:** `gpt-5.4-mini` (from Lab 03)
-3. Click **Deploy** and wait for status **Ready**.
-
-<!-- TODO(nitya): screenshot of the portal hosted-agent deploy flow -->
-
-> ⚠️ **Gotcha (portal path):** the container image must expose the Responses
-> protocol on port 8088 — the shipped `Dockerfile` already does this. Build
-> from `src/` unmodified for your first deploy.
+> ⚠️ **Gotcha — 409 Conflict on `azd deploy`.** If deploy fails with
+> `RESPONSE 409: 409 Conflict … The resource already exists or was modified
+> concurrently. Please retry.` and a plain retry doesn't clear it (portal may
+> also show *"Project not found"* on the Agents blade), the Foundry data plane
+> is holding a stale registration keyed on the current project/agent name.
+> Recovery:
+>
+> ```bash
+> azd down --purge --force              # tear down + purge soft-delete
+> azd env new contoso-travel-v2         # any new name → new account+project hash
+> azd env set ENABLE_HOSTED_AGENTS true
+> azd provision
+> azd deploy contoso-travel-concierge
+> ```
+>
+> The new env name changes the `uniqueString()` hash used by the infra, which
+> gives you a genuinely fresh Foundry project and clears the cache.
 
 ## Redeploying after a code change
 

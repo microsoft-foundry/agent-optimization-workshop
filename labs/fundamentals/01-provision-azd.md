@@ -1,9 +1,10 @@
-# Lab 01 — Provision Foundry with `azd up`
+# Lab 01 — Provision Foundry with `azd`
 
 > **What you'll do:** Stand up a Foundry project, deploy the `gpt-5.4-mini` and
 > `gpt-5.4-judge` models, and wire up Application Insights and Log Analytics in
-> your Azure subscription with a single command. The container registry and
-> hosted agent come later in [Lab 05](./05-deploy-hosted-agent.md).
+> your Azure subscription with a single `azd provision` command. The container
+> registry and hosted agent come later in
+> [Lab 05](./05-deploy-hosted-agent.md).
 > **Time:** ~15 min · **Prerequisites:** [Lab 00](./00-overview.md)
 >
 > ⏩ **Taking the portal path instead?** Skip to [Lab 02](./02-provision-portal.md).
@@ -87,16 +88,21 @@ Confirm you have:
    > project, run 'azd init'`, you're not in the repo root. `cd` to the folder
    > that contains `azure.yaml` and rerun the command.
 
-4. **Deploy.**
+4. **Provision.**
    ```bash
-   azd up
+   azd provision
    ```
    You'll be prompted twice:
    - **Select an Azure Subscription** — pick the subscription to deploy into.
    - **`aiDeploymentsLocation` infrastructure parameter** — choose
      **`(US) East US 2 (eastus2)`** (or one of the alternates above).
 
-   `azd up` provisions the Bicep in [`../../infra/`](../../infra/):
+   > 💡 **Why `azd provision` and not `azd up`?** `azd up` = `azd provision +
+   > azd deploy`. This lab only needs the Foundry substrate — the hosted-agent
+   > **deploy** is a deliberate step in [Lab 05](./05-deploy-hosted-agent.md).
+   > Splitting them keeps failures easy to diagnose and retries cheap.
+
+   `azd provision` runs the Bicep in [`../../infra/`](../../infra/):
    - resource group (`rg-contoso-travel`)
    - Foundry account + project
    - **`gpt-5.4-mini`** (concierge) + **`gpt-5.4-judge`** model deployments
@@ -117,30 +123,30 @@ Confirm you have:
      (✓) Done: Application Insights: appi-xxxxxxxxxxxxx
      (✓) Done: Foundry project connection: .../appi-xxxxxxxxxxxxx
 
-   SUCCESS: Your application was provisioned and deployed to Azure in 1 minute.
+   SUCCESS: Your application was provisioned in Azure in 1 minute.
    ```
 
    > 💡 **Want different models?** The golden path deploys `gpt-5.4-mini` and a
    > `gpt-5.4-judge`. To swap them, set the `AI_PROJECT_DEPLOYMENTS` env var
-   > before `azd up` — see [Lab 03](./03-deploy-models.md).
+   > before `azd provision` — see [Lab 03](./03-deploy-models.md).
 
    > 💡 **What's *not* here yet:** the Container Registry and the hosted agent
-   > are **not** provisioned by `azd up` — you create them when you deploy the
-   > hosted agent in [Lab 05](./05-deploy-hosted-agent.md).
+   > are **not** provisioned in this lab — you enable and create them when you
+   > deploy the hosted agent in [Lab 05](./05-deploy-hosted-agent.md).
 
-   <!-- TODO(nitya): screenshot of a successful `azd up` output with the project endpoint -->
+   <!-- TODO(nitya): screenshot of a successful `azd provision` output with the project endpoint -->
 
 5. **Read the outputs.**
-   The tail of `azd up` prints the **Foundry project endpoint** and related
-   environment values. Copy the endpoint into your notes — you'll use it in
-   every later lab. (The agent name and playground link appear once you deploy
-   the hosted agent in [Lab 05](./05-deploy-hosted-agent.md).)
+   The tail of `azd provision` prints the **Foundry project endpoint** and
+   related environment values. Copy the endpoint into your notes — you'll use
+   it in every later lab. (The agent name and playground link appear once you
+   deploy the hosted agent in [Lab 05](./05-deploy-hosted-agent.md).)
 
 > 💡 **Tip:** `azd env get-values` prints everything `azd` knows about your
 > environment. Later labs use this to pick up endpoints automatically.
 >
-> ⚠️ **Gotcha:** if `azd up` fails on quota, retry in a different region from
-> the list above using `azd env set AZURE_LOCATION swedencentral` then
+> ⚠️ **Gotcha:** if `azd provision` fails on quota, retry in a different region
+> from the list above using `azd env set AZURE_LOCATION swedencentral` then
 > `azd provision` again.
 
 ## ✅ Verify
@@ -163,19 +169,28 @@ AZURE_AI_MODEL_DEPLOYMENT_NAME="gpt-5.4-mini"
 
 Then open <https://portal.azure.com>, go to **Resource groups**, and confirm the
 `rg-contoso-travel` group contains a Foundry account, a Foundry project,
-the `gpt-5.4-mini` and `gpt-5.4-judge` model deployments, Application Insights,
-and a Log Analytics workspace.
+Application Insights, and a Log Analytics workspace.
 
-> 💡 The Container Registry, AI Search, and Storage show up **later** — after
-> [Lab 05](./05-deploy-hosted-agent.md) (hosted agent + registry).
+> 💡 **Where are the models?** Model deployments (`gpt-5.4-mini`,
+> `gpt-5.4-judge`) are sub-resources of the Foundry account, so they don't show
+> as separate rows in the Azure Portal resource-group view. To see them, open
+> the **Foundry portal**, enable the **new Foundry** toggle (top-right), then
+> go to **Build → Models**. Lab 03 walks through this.
+
+> 💡 The Container Registry, AI Search, and Storage show up **after** you enable
+> hosted-agent hosting in [Lab 05](./05-deploy-hosted-agent.md) — the
+> `azd env set ENABLE_HOSTED_AGENTS true && azd provision` step there adds them
+> to this same resource group, before you ever run `azd deploy`.
 
 <!-- TODO(nitya): screenshot of the resource group in the Azure portal -->
 
 ## 🧠 Recap
 
-- `azd up` provisioned the Foundry substrate — account, project, the
+- `azd provision` stood up the Foundry substrate — account, project, the
   `gpt-5.4-mini` and `gpt-5.4-judge` models, and observability (App Insights +
   Log Analytics) — in one shot.
+- Splitting **provision** (this lab) from **deploy** ([Lab 05](./05-deploy-hosted-agent.md))
+  mirrors the Agent DevOps loop and keeps retries scoped.
 - Environment values are stored per-`azd env` and reused by later labs.
 - Next you'll **confirm the model deployments** and learn how to change them.
 
