@@ -81,7 +81,7 @@ Do each step yourself. Refer back to the linked lab if you get stuck.
    cd .  # repo root
    azd down --purge --force
    ```
-   This tears down everything `azd up` created so you stop paying for it.
+   This tears down everything you provisioned earlier so you stop paying for it.
 
 ## ✅ Verify
 

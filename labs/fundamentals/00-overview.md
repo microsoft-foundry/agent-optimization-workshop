@@ -29,17 +29,17 @@ flowchart LR
 
 ## 📋 Steps
 
-1. **Read the [scenario](#scenario) below.**
-   You should now be able to name the four data sources the Concierge queries.
-2. **Skim the [Agent DevOps loop](#agent-devops-loop) diagram.**
-   You should now recognize the seven nodes and how they connect.
-3. **Pick your provisioning path** for the next lab: `azd up` (self-guided) or
+1. **Know the [scenario](#scenario).**
+   You should be able to name the sources for the Concierge queries.
+2. **Know the [Agent DevOps loop](#agent-devops-loop).**
+   You should recognize the nodes and how they connect.
+3. **Pick your provisioning path** for the next lab: `azd` (self-guided) or
    Foundry portal (UI-first).
 
 ### Scenario
 
 **Contoso Travel** is a fictitious travel agency. Their AI-powered **Contoso
-Travel Concierge** orchestrates specialist sub-agents that read three CSVs:
+Travel Concierge** orchestrates specialist sub-agents that read three CSVs (below) - also available in JSON format.
 
 | Data source | What it holds |
 |---|---|
@@ -69,9 +69,9 @@ cycle you'll run whenever the agent underperforms.
 
 Answer these to yourself (no tool required):
 
-- Which three CSVs does the Concierge use?
+- Which are the three CSVs used by the Travel Concierge?
 - What are the seven nodes of the Agent DevOps loop?
-- Which path (`azd up` or portal) will you take in Lab 01?
+- Which path (`azd` or portal) will you take in Lab 01?
 
 If you can answer all three, you're ready to provision.
 
@@ -85,5 +85,5 @@ If you can answer all three, you're ready to provision.
 
 Choose one:
 
-- Self-guided → **[Lab 01 — Provision with `azd up`](./01-provision-azd.md)**
+- Code-first → **[Lab 01 — Provision with `azd`](./01-provision-azd.md)**
 - UI-first → **[Lab 02 — Provision with the portal](./02-provision-portal.md)**

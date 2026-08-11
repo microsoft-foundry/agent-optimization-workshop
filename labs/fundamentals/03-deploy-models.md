@@ -6,7 +6,7 @@
 ## 🎯 Goal
 
 Deploy the language model(s) your agents and evaluators will call. On the
-`azd` path this already happened — `azd up` deployed `gpt-5.4-mini` and
+`azd` path this already happened — `azd provision` deployed `gpt-5.4-mini` and
 `gpt-5.4-judge` for you — so this lab is mostly about **confirming** the
 deployments and knowing how to add or swap models. On the portal path you
 deploy the model by hand here.
@@ -37,7 +37,7 @@ flowchart LR
 
 ## 📋 Steps
 
-**If you provisioned with `azd up` (Lab 01):**
+**If you provisioned with `azd` (Lab 01):**
 
 1. Confirm the deployments already exist:
    ```bash
@@ -56,13 +56,20 @@ flowchart LR
 
 > 💡 **Want different models?** The golden path deploys `gpt-5.4-mini` and
 > `gpt-5.4-judge`. To change them, set the `AI_PROJECT_DEPLOYMENTS` env var to a
-> JSON array **before** `azd up` (or set it and rerun `azd provision`). Setting
-> it replaces the default entirely, so include **every** model you want:
+> JSON array **before** `azd provision` (or set it and rerun `azd provision`).
+> Setting it replaces the default entirely, so include **every** model you want:
 >
 > ```bash
 > azd env set AI_PROJECT_DEPLOYMENTS '[{"name":"gpt-5.4-mini","model":{"name":"gpt-5.4-mini","format":"OpenAI","version":"2026-03-17"},"sku":{"name":"GlobalStandard","capacity":100}},{"name":"gpt-5.4-judge","model":{"name":"gpt-5.4","format":"OpenAI","version":"2026-03-05"},"sku":{"name":"GlobalStandard","capacity":100}}]'
 > azd provision
 > ```
+>
+> ⚠️ **Known limitation:** once this override is set, later re-provisions
+> (e.g. enabling hosted agents in [Lab 05](./05-deploy-hosted-agent.md)) fail
+> with `invalid character 'n' after object key:value pair` — azd 1.30 doesn't
+> escape the JSON when it substitutes into the Bicep parameters file. Clear it
+> before re-provisioning (`azd env set AI_PROJECT_DEPLOYMENTS "[]"`). Tracked
+> as `TODO(nitya)` in [`infra/main.bicep`](../../infra/main.bicep).
 
 **If you provisioned with the portal (Lab 02):**
 
