@@ -24,7 +24,7 @@ phases:
         produces: []
         consumes: []
       - id: "01-provision-azd"
-        title: Provision Foundry with `azd up`
+        title: Provision Foundry with `azd provision`
         loop_node: build
         time_min: 15
         prereqs: ["fundamentals/00-overview"]
@@ -56,7 +56,7 @@ phases:
           - {type: data, name: hotels}
           - {type: data, name: car_rentals}
       - id: "05-deploy-hosted-agent"
-        title: Deploy the Hosted Agent (`azd up`)
+        title: Deploy the Hosted Agent (`azd deploy`)
         loop_node: deploy
         time_min: 15
         prereqs: ["fundamentals/03-deploy-models"]

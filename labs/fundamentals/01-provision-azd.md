@@ -28,6 +28,18 @@ flowchart LR
 > 🧭 **This lab covers:** _Build_ — provisioning the substrate you'll deploy the
 > Concierge onto.
 
+### 📍 You are here
+
+```mermaid
+flowchart LR
+    L0["00<br/>overview"] --> L1["01<br/>azd"]:::active
+    L0 --> L2["02<br/>portal"]
+    L1 --> L3["03<br/>models"]
+    L2 --> L3
+    L3 --> L4["04<br/>prompt agent"] --> L5["05<br/>hosted agent"] --> L6["06<br/>verify"]
+    classDef active fill:#0ea5e9,stroke:#0369a1,color:#fff;
+```
+
 ## Before you start
 
 Confirm you have:
@@ -40,6 +52,19 @@ Confirm you have:
    - **`northcentralus`** (US backup)
 3. Either the workshop **devcontainer** open (see `.devcontainer/README.md`)
    or `az`, `azd`, and Python 3.13+ installed locally.
+
+> 💡 **Tip — pre-flight your quota with Copilot.** After `az login` (Step 1
+> below), paste this prompt into Copilot Chat to have the
+> [`microsoft-foundry`](https://github.com/microsoft/azure-skills/tree/main/skills/microsoft-foundry)
+> `quota` sub-skill confirm capacity before you provision:
+>
+> > Use the microsoft-foundry quota skill to confirm I have GlobalStandard
+> > capacity 100 in eastus2 for `gpt-5.4-mini@2026-03-17` and
+> > `gpt-5.4@2026-03-05`. If not, recommend the best of `eastus2` /
+> > `swedencentral` / `northcentralus`.
+>
+> If eastus2 comes back short, switch to whichever region the skill
+> recommends before running `azd provision`.
 
 > ⚠️ **Cost:** provisioning runs in **your** subscription and incurs cost.
 > You'll tear it all down with `azd down` at the end.

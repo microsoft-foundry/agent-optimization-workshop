@@ -20,6 +20,18 @@ flowchart LR
 
 > 🧭 **This lab covers:** _Deploy_ — publishing a containerized agent to Foundry.
 
+### 📍 You are here
+
+```mermaid
+flowchart LR
+    L0["00<br/>overview"] --> L1["01<br/>azd"]
+    L0 --> L2["02<br/>portal"]
+    L1 --> L3["03<br/>models"]
+    L2 --> L3
+    L3 --> L4["04<br/>prompt agent"] --> L5["05<br/>hosted agent"]:::active --> L6["06<br/>verify"]
+    classDef active fill:#0ea5e9,stroke:#0369a1,color:#fff;
+```
+
 ## Before you start
 
 The hosted agent is **not** deployed by `azd provision` in Lab 01 — that step
@@ -33,6 +45,19 @@ up: the `azure.ai.agents` **azd extension** (the CLI commands) and the
 host). You'll enable both below.
 
 ## 📋 Steps
+
+> 🧭 **Path check — portal-first only.** If you provisioned via the portal
+> (Lab 02) and this is your first `azd` step, run the linker script **once**
+> before Step 1 so `azd provision` reuses your existing resource group
+> instead of creating a second one:
+>
+> ```bash
+> ./scripts/link-portal-rg.sh
+> ```
+>
+> The script auto-discovers the RG, Foundry account, and project, then binds
+> them into an `azd env` named `contoso-travel`. Idempotent — safe to re-run.
+> **Skip this if you did Lab 01 (`azd`) already.**
 
 1. **Make sure the hosted-agents extension is installed.**
    The `azd ai agent` commands and hosted `azd deploy` come from the

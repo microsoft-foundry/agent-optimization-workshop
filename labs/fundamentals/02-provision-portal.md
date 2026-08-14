@@ -23,6 +23,18 @@ flowchart LR
 
 > 🧭 **This lab covers:** _Build_ — provisioning the substrate through the UI.
 
+### 📍 You are here
+
+```mermaid
+flowchart LR
+    L0["00<br/>overview"] --> L1["01<br/>azd"]
+    L0 --> L2["02<br/>portal"]:::active
+    L1 --> L3["03<br/>models"]
+    L2 --> L3
+    L3 --> L4["04<br/>prompt agent"] --> L5["05<br/>hosted agent"] --> L6["06<br/>verify"]
+    classDef active fill:#0ea5e9,stroke:#0369a1,color:#fff;
+```
+
 ## Before you start
 
 - An **Azure subscription** with permission to create resources.
@@ -63,10 +75,12 @@ flowchart LR
 
    <!-- TODO(nitya): screenshot showing where the project endpoint appears in Overview -->
 
-> 💡 **Tip:** if you later want to switch to the `azd` path, you can point
-> `azd` at this existing project by setting `AZURE_EXISTING_AIPROJECT_RESOURCE_ID`
-> in your `azd` environment — the Bicep in `infra/core/ai/existing-ai-project.bicep`
-> supports this.
+> 💡 **Tip — moving to CLI later?** If you plan to run the CLI-only steps in
+> [Lab 05](./05-deploy-hosted-agent.md) to deploy the hosted agent, you'll
+> run [`scripts/link-portal-rg.sh`](../../scripts/link-portal-rg.sh) once
+> before Lab 05 Step 1. It binds an `azd env` to this portal-created RG so
+> `azd provision` reuses it — no second resource group. You don't need to run
+> it now.
 
 ## ✅ Verify
 

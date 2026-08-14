@@ -75,6 +75,15 @@ maintainer follow-ups (screenshots, exact commands, model pinning, etc.).
   manage hosted agents but has no create flow — `azd deploy` is the only
   supported creation path today. Do not add "portal path" instructions for
   hosted agents unless the portal ships that flow.
+- **Mixed UI→CLI path creates a second resource group.** A learner who did Lab
+  02 (portal) has `rg-contoso-travel` in Azure but no `.azure/` env locally.
+  Running `azd env new … && azd provision` in Lab 05 then creates a *second*
+  RG (`rg-<new-env-name>`) instead of reusing the portal one. Fix: `bash
+  scripts/link-portal-rg.sh` (idempotent — discovers the RG + Foundry account +
+  project and seeds the azd env with `AZURE_RESOURCE_GROUP`,
+  `AZURE_AI_ACCOUNT_NAME`, `AZURE_AI_PROJECT_NAME`, and
+  `USE_EXISTING_AI_PROJECT=true`). Kept in sync with the Lab 05 "Path check"
+  callout and the Lab 00 overview mermaid warning.
 - **`azd provision` fails with `invalid character 'n' after object key:value
   pair`.** The four `*Json` params in `infra/main.parameters.json` are
   quoted-string substitutions (e.g. `"value": "${AI_PROJECT_DEPLOYMENTS=[]}"`)
