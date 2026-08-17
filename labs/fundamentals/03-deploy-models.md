@@ -76,12 +76,10 @@ flowchart LR
 > azd provision
 > ```
 >
-> ⚠️ **Known limitation:** once this override is set, later re-provisions
+> ⚠️ **Known limitation.** Once this override is set, later re-provisions
 > (e.g. enabling hosted agents in [Lab 05](./05-deploy-hosted-agent.md)) fail
-> with `invalid character 'n' after object key:value pair` — azd 1.30 doesn't
-> escape the JSON when it substitutes into the Bicep parameters file. Clear it
-> before re-provisioning (`azd env set AI_PROJECT_DEPLOYMENTS "[]"`). Tracked
-> as `TODO(nitya)` in [`infra/main.bicep`](../../infra/main.bicep).
+> with `invalid character 'n' after object key:value pair`. Details in
+> [Troubleshooting · `invalid character 'n'`](../TROUBLESHOOTING.md#azd-provision-fails-with-invalid-character-n-after-object-keyvalue-pair).
 
 **If you provisioned with the portal (Lab 02):**
 
@@ -106,9 +104,8 @@ flowchart LR
    `gpt-5.4-judge`.
 1. You'll reference this in Core Lab 02.
 
-> ⚠️ **Gotcha:** if the deploy button is greyed out, you're out of quota.
-> Try a different region from the supported list, or request a quota increase
-> from **Management center → Quota**.
+> ⚠️ **Gotcha — Deploy button greyed out.** You're out of quota. Details in
+> [Troubleshooting · Quota / capacity errors](../TROUBLESHOOTING.md#quota--capacity-errors-on-azd-provision-or-model-deploy).
 
 ## ✅ Verify
 

@@ -49,6 +49,25 @@ Every file under `labs/{fundamentals,core,more}/*.md` **must** follow
 - Callouts: `> 🎯` `> ✅` `> 💡` `> ⚠️` `> 🧭` `> 🧠`
 - Every generative step ships a `reference/` artifact under `artifacts/`
 
+### Callout conventions — Gotchas
+
+Two-variant rule (guarded by `tests/test_lab_content.py`):
+
+1. **Inline gotcha** — a single lab-specific mistake, ≤ 4 lines, fits in the
+   step's flow. Format: `> ⚠️ **Gotcha:** <one-liner>.`
+2. **Cross-cutting gotcha** — infra/tool errors that recur across labs, or
+   need multi-step recovery. Author them **once** in
+   [`labs/TROUBLESHOOTING.md`](./labs/TROUBLESHOOTING.md) under a stable H3
+   using the **Symptom / Cause / Fix / Prevent** template. In the lab, keep
+   the callout to one line:
+
+   ```markdown
+   > ⚠️ **Gotcha — <error phrase>.** Details in [Troubleshooting · <section>](../TROUBLESHOOTING.md#anchor).
+   ```
+
+`> ⚠️ **Cost:** …` and `> ⚠️ **Known limitation:** …` follow the same visual
+style but are not enforced by the drift-check.
+
 ## Workshop-Coach agent
 
 Do **not** modify `.github/agents/workshop-coach.agent.md` behavior contract
@@ -65,45 +84,39 @@ maintainer follow-ups (screenshots, exact commands, model pinning, etc.).
 
 ## Known gotchas
 
-- **Foundry hosted-agent 409 on `azd deploy`.** Reusing the same `azd env` name
-  after a torn-down deploy can hit stale server-side state on the Foundry agents
-  data plane, producing `RESPONSE 409: 409 Conflict … modified concurrently`
-  even though `azd ai agent doctor` sees no agent. Recovery: `azd down --purge
-  --force` → `azd env new <different-name>` → `azd provision` → `azd deploy`.
-  Captured in the Lab 05 gotcha callout — keep those two in sync.
+Canonical entries live in [`labs/TROUBLESHOOTING.md`](./labs/TROUBLESHOOTING.md).
+Bullets below are pointers — keep them in lockstep with the canonical section
+anchors and the in-lab callouts that link to them.
+
+- **`azd provision` — soft-deleted resource blocks re-provision.** Purge the
+  Cognitive Services (Foundry) account or use a fresh `azd env` name.
+  [Troubleshooting](./labs/TROUBLESHOOTING.md#soft-deleted-cognitive-services-account-blocks-re-provision)
+  · Lab 01.
+- **`azd provision` — `invalid character 'n' after object key:value pair`.**
+  Non-empty `AI_PROJECT_DEPLOYMENTS` (or the other three `*Json` params) breaks
+  the parameters file on azd ≤ 1.31. Workaround: `azd env set
+  AI_PROJECT_DEPLOYMENTS "[]"`. Structural fix tracked as `TODO(nitya)` in
+  `infra/main.bicep` (switch the four params to `array`/`object` types).
+  [Troubleshooting](./labs/TROUBLESHOOTING.md#azd-provision-fails-with-invalid-character-n-after-object-keyvalue-pair)
+  · Lab 03 + Lab 05.
+- **`azd deploy` — 409 Conflict.** Reusing the same `azd env` name after a
+  torn-down deploy hits stale Foundry data-plane state; recovery needs a fresh
+  env name. [Troubleshooting](./labs/TROUBLESHOOTING.md#409-conflict-on-azd-deploy)
+  · Lab 05.
+- **`azd deploy` — 404 `Subdomain does not map to a resource`.** Stale bearer
+  token, not a missing resource. Re-auth **both** `az` and `azd` (independent
+  token caches). [Troubleshooting](./labs/TROUBLESHOOTING.md#404-subdomain-does-not-map-to-a-resource-on-azd-deploy)
+  · Lab 05.
+- **Mixed UI→CLI path creates a second resource group.** A portal-first
+  learner running `azd env new … && azd provision` in Lab 05 creates a second
+  RG. Fix: `bash scripts/link-portal-rg.sh` (idempotent).
+  [Troubleshooting](./labs/TROUBLESHOOTING.md#ui-provision--cli-deploy-creates-a-second-resource-group)
+  · Lab 05 "Path check" + Lab 00 overview warning.
 - **Portal cannot *create* hosted agents.** The Foundry portal can view and
   manage hosted agents but has no create flow — `azd deploy` is the only
   supported creation path today. Do not add "portal path" instructions for
-  hosted agents unless the portal ships that flow.
-- **Mixed UI→CLI path creates a second resource group.** A learner who did Lab
-  02 (portal) has `rg-contoso-travel` in Azure but no `.azure/` env locally.
-  Running `azd env new … && azd provision` in Lab 05 then creates a *second*
-  RG (`rg-<new-env-name>`) instead of reusing the portal one. Fix: `bash
-  scripts/link-portal-rg.sh` (idempotent — discovers the RG + Foundry account +
-  project and seeds the azd env with `AZURE_RESOURCE_GROUP`,
-  `AZURE_AI_ACCOUNT_NAME`, `AZURE_AI_PROJECT_NAME`, and
-  `USE_EXISTING_AI_PROJECT=true`). Kept in sync with the Lab 05 "Path check"
-  callout and the Lab 00 overview mermaid warning.
-- **`azd provision` fails with `invalid character 'n' after object key:value
-  pair`.** The four `*Json` params in `infra/main.parameters.json` are
-  quoted-string substitutions (e.g. `"value": "${AI_PROJECT_DEPLOYMENTS=[]}"`)
-  and azd 1.30 does not JSON-escape embedded `"` on substitution. Any non-empty
-  override (e.g. a user-supplied `AI_PROJECT_DEPLOYMENTS` array) breaks the
-  parameters file. Workaround: `azd env set AI_PROJECT_DEPLOYMENTS "[]"` and
-  re-provision — the defaults in `infra/main.bicep` still deploy
-  `gpt-5.4-mini` + `gpt-5.4-judge`. Structural fix (`TODO(nitya)` in
-  `infra/main.bicep`): change the four params to `array`/`object` types, drop
-  the `json()` calls, and substitute without surrounding quotes. Kept in sync
-  with Lab 03 + Lab 05 gotcha callouts.
-- **`azd deploy` fails with `RESPONSE 404: ResourceNotFound — Subdomain does
-  not map to a resource`.** The Foundry agents data plane returns 404 (not
-  401) when the caller's bearer token is expired or revoked — typically
-  `AADSTS50173` after a password change, credential rotation, or Conditional
-  Access policy update. The account is fine; auth is stale. `azd` and `az`
-  cache tokens independently, so both must be refreshed: `az logout && az
-  login --tenant <id>` then `azd auth logout && azd auth login --tenant-id
-  <id>`, then re-run `azd deploy`. Kept in sync with the Lab 05 gotcha
-  callout.
+  hosted agents unless the portal ships that flow. *(No troubleshooting entry
+  — this is a static product limitation, not an error.)*
 
 ## Tests
 

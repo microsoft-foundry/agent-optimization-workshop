@@ -79,19 +79,9 @@ host). You'll enable both below.
    This adds the registry + capability host to your existing resource group.
 
    > ⚠️ **Gotcha — `invalid character 'n' after object key:value pair`.**
-   > `azd provision` fails when your env has a custom `AI_PROJECT_DEPLOYMENTS`
-   > (or `AI_PROJECT_CONNECTIONS` / `_CREDENTIALS` / `_DEPENDENT_RESOURCES`)
-   > JSON value set — azd 1.30 doesn't escape the quotes when it substitutes
-   > it into the Bicep parameters file. Clear it and re-run; the defaults in
-   > `infra/main.bicep` still deploy `gpt-5.4-mini` + `gpt-5.4-judge`:
-   >
-   > ```bash
-   > azd env set AI_PROJECT_DEPLOYMENTS "[]"
-   > azd provision
-   > ```
-   >
-   > Need a custom deployment list? See the workaround in
-   > [Lab 03](./03-deploy-models.md).
+   > A stale `AI_PROJECT_DEPLOYMENTS` env value breaks `azd provision`. Clear
+   > it with `azd env set AI_PROJECT_DEPLOYMENTS "[]"` and re-run. Details in
+   > [Troubleshooting · `invalid character 'n'`](../TROUBLESHOOTING.md#azd-provision-fails-with-invalid-character-n-after-object-keyvalue-pair).
 
 3. **Deploy the hosted agent.**
    ```bash
@@ -139,41 +129,13 @@ host). You'll enable both below.
 > manage** hosted agents but does not have a *create* flow for them. `azd
 > deploy` is the one supported way to publish a hosted agent today.
 
-> ⚠️ **Gotcha — 409 Conflict on `azd deploy`.** If deploy fails with
-> `RESPONSE 409: 409 Conflict … The resource already exists or was modified
-> concurrently. Please retry.` and a plain retry doesn't clear it (portal may
-> also show *"Project not found"* on the Agents blade), the Foundry data plane
-> is holding a stale registration keyed on the current project/agent name.
-> Recovery:
->
-> ```bash
-> azd down --purge --force              # tear down + purge soft-delete
-> azd env new contoso-travel-v2         # any new name → new account+project hash
-> azd env set ENABLE_HOSTED_AGENTS true
-> azd provision
-> azd deploy contoso-travel-concierge
-> ```
->
-> The new env name changes the `uniqueString()` hash used by the infra, which
-> gives you a genuinely fresh Foundry project and clears the cache.
+> ⚠️ **Gotcha — 409 Conflict on `azd deploy`.** Stale Foundry data-plane
+> state after a torn-down deploy. Recovery needs a fresh `azd env` name.
+> Details in [Troubleshooting · 409 Conflict](../TROUBLESHOOTING.md#409-conflict-on-azd-deploy).
 
-> ⚠️ **Gotcha — 404 "Subdomain does not map to a resource" on `azd deploy`.**
-> The Foundry agents data plane returns `RESPONSE 404: ResourceNotFound —
-> Subdomain does not map to a resource` when the caller's bearer token is
-> expired or revoked (typical trigger: `AADSTS50173` — a password change,
-> credential rotation, or Conditional Access policy moved `TokensValidFrom`
-> past your issued-at time). The account is fine; auth is stale. `azd deploy`
-> uses its own token cache separate from `az`, so **both** must be refreshed:
->
-> ```bash
-> az logout && az login --tenant <your-tenant-id>
-> azd auth logout && azd auth login --tenant-id <your-tenant-id>
-> azd deploy contoso-travel-concierge
-> ```
->
-> Quick sanity check that the resource itself is healthy (should return `HTTP
-> 200` even unauthenticated):
-> `curl -sS -o /dev/null -w "%{http_code}\n" https://$(azd env get-value AZURE_AI_ACCOUNT_NAME).services.ai.azure.com/`
+> ⚠️ **Gotcha — 404 `Subdomain does not map to a resource` on `azd deploy`.**
+> Stale bearer token (not the resource). Re-auth **both** `az` and `azd`.
+> Details in [Troubleshooting · 404 Subdomain does not map](../TROUBLESHOOTING.md#404-subdomain-does-not-map-to-a-resource-on-azd-deploy).
 
 ## Redeploying after a code change
 

@@ -23,6 +23,10 @@
     "steps_section":           { "type": "string", "pattern": "📋" },
     "verify_section":          { "type": "string", "pattern": "✅" },
     "recap_section":           { "type": "string", "pattern": "🧠" },
-    "next_section":            { "type": "string", "pattern": "➡️" }
+    "next_section":            { "type": "string", "pattern": "➡️" },
+    "gotcha_convention": {
+      "type": "string",
+      "description": "Non-schema-enforced authoring rule (guarded by tests/test_lab_content.py): a > ⚠️ **Gotcha** callout is either (a) a single lab-specific mistake, ≤ 4 lines, inline; or (b) a one-line pointer to labs/TROUBLESHOOTING.md#<anchor> for cross-cutting infra/tool errors. Deep multi-step recovery details live only in labs/TROUBLESHOOTING.md."
+    }
   }
 }

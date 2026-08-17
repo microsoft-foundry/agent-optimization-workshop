@@ -159,6 +159,12 @@ Confirm you have:
    > are **not** provisioned in this lab — you enable and create them when you
    > deploy the hosted agent in [Lab 05](./05-deploy-hosted-agent.md).
 
+   > ⚠️ **Gotcha — soft-deleted resource blocks re-provision.** If you ran
+   > `azd provision` in this repo before and see `A soft-deleted resource with
+   > this name exists and is blocking deployment`, purge the account (or use a
+   > fresh env name). Details in
+   > [Troubleshooting · Soft-deleted Cognitive Services account](../TROUBLESHOOTING.md#soft-deleted-cognitive-services-account-blocks-re-provision).
+
    <!-- DONE: screenshot of a successful `azd provision` output with the project endpoint replaced by code-fenced output above -->
 
 5. **Read the outputs.**
@@ -176,9 +182,8 @@ Confirm you have:
 
    ![New Microsoft Foundry portal — New Foundry toggle on, Build tab highlighted, endpoint and API key visible on the overview](./images/01-provision-infra-03.png)
 
-   > ⚠️ **Gotcha:** if `azd provision` fails on quota, retry in a different region
-   > from the list above using `azd env set AZURE_LOCATION swedencentral` then
-   > `azd provision` again.
+   > ⚠️ **Gotcha — quota / capacity error on `azd provision`.** Details in
+   > [Troubleshooting · Quota / capacity errors](../TROUBLESHOOTING.md#quota--capacity-errors-on-azd-provision-or-model-deploy).
 
 ## ✅ Verify
 
