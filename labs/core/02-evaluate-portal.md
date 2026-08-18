@@ -25,7 +25,7 @@ flowchart LR
 ## The reference dataset
 
 The workshop ships a curated evaluation dataset at
-[`../../artifacts/datasets/reference/evaluation-data-v1.jsonl`](../../artifacts/datasets/reference/evaluation-data-v1.jsonl).
+[`../../artifacts/datasets/reference/evaluation-data-v2.jsonl`](../../artifacts/datasets/reference/evaluation-data-v2.jsonl).
 It contains ~15 queries across three difficulty tiers (single-specialist,
 multi-part itinerary, and out-of-scope refusal) that together stress-test the
 Prompt Agent baseline.
@@ -37,19 +37,26 @@ Prompt Agent baseline.
 ## 📋 Steps
 
 1. **Open Evaluations.**
-   Foundry portal → **My assets → Evaluations** → **+ New evaluation**.
+   Foundry portal → **Build → Evaluations** → **Create** new evaluation.
 
    <!-- TODO(nitya): screenshot of the "New evaluation" flow -->
 
-2. **Choose the target.**
+1. **Choose the target.**
    Under **Target**, pick the **`contoso-travel-concierge-prompt`** agent.
 
-3. **Upload the dataset.**
-   Under **Data**, upload
-   `artifacts/datasets/reference/evaluation-data-v1.jsonl` (or use
-   `./scripts/use-reference.sh datasets evaluation-data-v1` first to stage it).
+1. Choose **Single-turn conversations** by default.
+1. Choose **One-time** as frequency.
+1. Choose **Existing dataset** as data source
+   1. **Upload the dataset.**
+      Under **Data**, upload
+      `artifacts/datasets/reference/evaluation-data-v2.jsonl` (or use
+      `./scripts/use-reference.sh datasets evaluation-data-v2` first to stage it).
+   1. Wait for upload to complete
+   1. Review the data records right in portal.
+   1. Switch to the judge model
+   1. No need to add anything for custom prompts
 
-4. **Select evaluators.**
+1. **Select evaluators.**
    Enable at least:
    - **Task completion**
    - **Groundedness**
@@ -63,7 +70,8 @@ Prompt Agent baseline.
    <!-- TODO(nitya): screenshot of the evaluator selection panel -->
 
 5. **Run the evaluation.**
-   Click **Create**. The run takes 2–5 minutes depending on dataset size.
+   1. Create a custom name e.g., `prompt-agent-eval-run` - optional
+   1. Click **Create**. The run takes 2–5 minutes depending on dataset size.
 
 6. **Read the results.**
    When the run finishes, open it. You'll see:
@@ -76,6 +84,8 @@ Prompt Agent baseline.
    *common* failure mode — asking-instead-of-answering, missing IDs, no price
    citation, ungrounded superlatives, etc. Write it down; Core Lab 03 will
    target it.
+
+   (Optional) You can choose the evaluations row and click *Analyze results* to have a cluster analysis run for you. This gives you more insights into possible areas for optimization.
 
    <!-- TODO(nitya): screenshot of a low-scoring row with the evaluator rationale expanded -->
 

@@ -53,7 +53,7 @@ Do each step yourself. Refer back to the linked lab if you get stuck.
 3. **Evaluate.**
    Following [Core Lab 02](./02-evaluate-portal.md), run a batch evaluation on
    `contoso-travel-concierge` against
-   `artifacts/datasets/reference/evaluation-data-v1.jsonl`. Note the top
+   `artifacts/datasets/reference/evaluation-data-v2.jsonl`. Note the top
    failure pattern.
 
 4. **Optimize.**
