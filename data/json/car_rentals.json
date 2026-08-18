@@ -6,8 +6,8 @@
     "car_type": "Economy",
     "price_per_day_usd": "45.00",
     "available": "true",
-    "pickup_date": "2025-08-15",
-    "return_date": "2025-08-30"
+    "pickup_date": "2027-08-15",
+    "return_date": "2027-08-30"
   },
   {
     "rental_id": "CT-CR-002",
@@ -16,8 +16,8 @@
     "car_type": "SUV",
     "price_per_day_usd": "85.00",
     "available": "true",
-    "pickup_date": "2025-08-15",
-    "return_date": "2025-08-30"
+    "pickup_date": "2027-08-15",
+    "return_date": "2027-08-30"
   },
   {
     "rental_id": "CT-CR-003",
@@ -26,8 +26,8 @@
     "car_type": "Luxury",
     "price_per_day_usd": "150.00",
     "available": "true",
-    "pickup_date": "2025-08-15",
-    "return_date": "2025-08-30"
+    "pickup_date": "2027-08-15",
+    "return_date": "2027-08-30"
   },
   {
     "rental_id": "CT-CR-004",
@@ -36,8 +36,8 @@
     "car_type": "Economy",
     "price_per_day_usd": "50.00",
     "available": "true",
-    "pickup_date": "2025-09-01",
-    "return_date": "2025-09-15"
+    "pickup_date": "2027-09-01",
+    "return_date": "2027-09-15"
   },
   {
     "rental_id": "CT-CR-005",
@@ -46,8 +46,8 @@
     "car_type": "SUV",
     "price_per_day_usd": "95.00",
     "available": "true",
-    "pickup_date": "2025-09-01",
-    "return_date": "2025-09-15"
+    "pickup_date": "2027-09-01",
+    "return_date": "2027-09-15"
   },
   {
     "rental_id": "CT-CR-006",
@@ -56,8 +56,8 @@
     "car_type": "Luxury",
     "price_per_day_usd": "175.00",
     "available": "false",
-    "pickup_date": "2025-09-01",
-    "return_date": "2025-09-15"
+    "pickup_date": "2027-09-01",
+    "return_date": "2027-09-15"
   },
   {
     "rental_id": "CT-CR-007",
@@ -66,8 +66,8 @@
     "car_type": "Economy",
     "price_per_day_usd": "55.00",
     "available": "true",
-    "pickup_date": "2025-10-05",
-    "return_date": "2025-10-20"
+    "pickup_date": "2027-10-05",
+    "return_date": "2027-10-20"
   },
   {
     "rental_id": "CT-CR-008",
@@ -76,8 +76,8 @@
     "car_type": "Minivan",
     "price_per_day_usd": "90.00",
     "available": "true",
-    "pickup_date": "2025-10-05",
-    "return_date": "2025-10-20"
+    "pickup_date": "2027-10-05",
+    "return_date": "2027-10-20"
   },
   {
     "rental_id": "CT-CR-009",
@@ -86,8 +86,8 @@
     "car_type": "Luxury",
     "price_per_day_usd": "200.00",
     "available": "true",
-    "pickup_date": "2025-10-05",
-    "return_date": "2025-10-20"
+    "pickup_date": "2027-10-05",
+    "return_date": "2027-10-20"
   },
   {
     "rental_id": "CT-CR-010",
@@ -96,8 +96,8 @@
     "car_type": "Economy",
     "price_per_day_usd": "40.00",
     "available": "true",
-    "pickup_date": "2025-11-01",
-    "return_date": "2025-11-15"
+    "pickup_date": "2027-11-01",
+    "return_date": "2027-11-15"
   },
   {
     "rental_id": "CT-CR-011",
@@ -106,8 +106,8 @@
     "car_type": "SUV",
     "price_per_day_usd": "80.00",
     "available": "true",
-    "pickup_date": "2025-11-01",
-    "return_date": "2025-11-15"
+    "pickup_date": "2027-11-01",
+    "return_date": "2027-11-15"
   },
   {
     "rental_id": "CT-CR-012",
@@ -116,8 +116,8 @@
     "car_type": "Luxury",
     "price_per_day_usd": "160.00",
     "available": "false",
-    "pickup_date": "2025-11-01",
-    "return_date": "2025-11-15"
+    "pickup_date": "2027-11-01",
+    "return_date": "2027-11-15"
   },
   {
     "rental_id": "CT-CR-013",
@@ -126,8 +126,8 @@
     "car_type": "Economy",
     "price_per_day_usd": "35.00",
     "available": "true",
-    "pickup_date": "2025-12-20",
-    "return_date": "2026-01-05"
+    "pickup_date": "2027-12-20",
+    "return_date": "2028-01-05"
   },
   {
     "rental_id": "CT-CR-014",
@@ -136,8 +136,8 @@
     "car_type": "SUV",
     "price_per_day_usd": "70.00",
     "available": "true",
-    "pickup_date": "2025-12-20",
-    "return_date": "2026-01-05"
+    "pickup_date": "2027-12-20",
+    "return_date": "2028-01-05"
   },
   {
     "rental_id": "CT-CR-015",
@@ -146,7 +146,7 @@
     "car_type": "Minivan",
     "price_per_day_usd": "65.00",
     "available": "true",
-    "pickup_date": "2025-12-20",
-    "return_date": "2026-01-05"
+    "pickup_date": "2027-12-20",
+    "return_date": "2028-01-05"
   }
 ]
