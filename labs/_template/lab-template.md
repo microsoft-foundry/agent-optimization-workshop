@@ -42,7 +42,12 @@ flowchart LR
 
 > 💡 **Tip:** short, high-value hints go here.
 >
-> ⚠️ **Gotcha:** call out common mistakes here.
+> ⚠️ **Gotcha:** _small, lab-specific_ mistakes go inline (≤ 4 lines).
+>
+> ⚠️ **Gotcha — <error phrase>.** For _cross-cutting_ infra/tool errors
+> (anything that recurs across labs or needs multi-step recovery), keep the
+> callout to one line and link to the canonical entry in
+> [`labs/TROUBLESHOOTING.md`](../TROUBLESHOOTING.md).
 
 ## ✅ Verify
 

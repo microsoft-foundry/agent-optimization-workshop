@@ -8,8 +8,8 @@
     "price_per_night_usd": "320.00",
     "amenities": "WiFi,Pool,Spa,Restaurant,Gym",
     "available_rooms": "8",
-    "check_in_date": "2025-08-15",
-    "check_out_date": "2025-08-30"
+    "check_in_date": "2027-08-15",
+    "check_out_date": "2027-08-30"
   },
   {
     "hotel_id": "CT-HT-002",
@@ -20,8 +20,8 @@
     "price_per_night_usd": "95.00",
     "amenities": "WiFi,Breakfast",
     "available_rooms": "22",
-    "check_in_date": "2025-08-15",
-    "check_out_date": "2025-08-30"
+    "check_in_date": "2027-08-15",
+    "check_out_date": "2027-08-30"
   },
   {
     "hotel_id": "CT-HT-003",
@@ -32,8 +32,8 @@
     "price_per_night_usd": "210.00",
     "amenities": "WiFi,Restaurant,Gym,River View",
     "available_rooms": "14",
-    "check_in_date": "2025-08-15",
-    "check_out_date": "2025-08-30"
+    "check_in_date": "2027-08-15",
+    "check_out_date": "2027-08-30"
   },
   {
     "hotel_id": "CT-HT-004",
@@ -44,8 +44,8 @@
     "price_per_night_usd": "380.00",
     "amenities": "WiFi,Pool,Spa,Restaurant,Concierge",
     "available_rooms": "6",
-    "check_in_date": "2025-09-01",
-    "check_out_date": "2025-09-15"
+    "check_in_date": "2027-09-01",
+    "check_out_date": "2027-09-15"
   },
   {
     "hotel_id": "CT-HT-005",
@@ -56,8 +56,8 @@
     "price_per_night_usd": "65.00",
     "amenities": "WiFi,Shared Kitchen",
     "available_rooms": "30",
-    "check_in_date": "2025-09-01",
-    "check_out_date": "2025-09-15"
+    "check_in_date": "2027-09-01",
+    "check_out_date": "2027-09-15"
   },
   {
     "hotel_id": "CT-HT-006",
@@ -68,8 +68,8 @@
     "price_per_night_usd": "245.00",
     "amenities": "WiFi,Restaurant,Gym,Parking",
     "available_rooms": "11",
-    "check_in_date": "2025-09-01",
-    "check_out_date": "2025-09-15"
+    "check_in_date": "2027-09-01",
+    "check_out_date": "2027-09-15"
   },
   {
     "hotel_id": "CT-HT-007",
@@ -80,8 +80,8 @@
     "price_per_night_usd": "290.00",
     "amenities": "WiFi,Pool,Spa,Restaurant,Rooftop Bar",
     "available_rooms": "10",
-    "check_in_date": "2025-10-05",
-    "check_out_date": "2025-10-20"
+    "check_in_date": "2027-10-05",
+    "check_out_date": "2027-10-20"
   },
   {
     "hotel_id": "CT-HT-008",
@@ -92,8 +92,8 @@
     "price_per_night_usd": "180.00",
     "amenities": "WiFi,Hot Spring,Traditional Breakfast,Garden",
     "available_rooms": "5",
-    "check_in_date": "2025-10-05",
-    "check_out_date": "2025-10-20"
+    "check_in_date": "2027-10-05",
+    "check_out_date": "2027-10-20"
   },
   {
     "hotel_id": "CT-HT-009",
@@ -104,8 +104,8 @@
     "price_per_night_usd": "110.00",
     "amenities": "WiFi,Breakfast,Laundry",
     "available_rooms": "25",
-    "check_in_date": "2025-10-05",
-    "check_out_date": "2025-10-20"
+    "check_in_date": "2027-10-05",
+    "check_out_date": "2027-10-20"
   },
   {
     "hotel_id": "CT-HT-010",
@@ -116,8 +116,8 @@
     "price_per_night_usd": "230.00",
     "amenities": "WiFi,Restaurant,Rooftop Terrace,Breakfast",
     "available_rooms": "12",
-    "check_in_date": "2025-11-01",
-    "check_out_date": "2025-11-15"
+    "check_in_date": "2027-11-01",
+    "check_out_date": "2027-11-15"
   },
   {
     "hotel_id": "CT-HT-011",
@@ -128,8 +128,8 @@
     "price_per_night_usd": "125.00",
     "amenities": "WiFi,Breakfast,Garden",
     "available_rooms": "9",
-    "check_in_date": "2025-11-01",
-    "check_out_date": "2025-11-15"
+    "check_in_date": "2027-11-01",
+    "check_out_date": "2027-11-15"
   },
   {
     "hotel_id": "CT-HT-012",
@@ -140,8 +140,8 @@
     "price_per_night_usd": "410.00",
     "amenities": "WiFi,Pool,Spa,Restaurant,Concierge,Gym",
     "available_rooms": "4",
-    "check_in_date": "2025-11-01",
-    "check_out_date": "2025-11-15"
+    "check_in_date": "2027-11-01",
+    "check_out_date": "2027-11-15"
   },
   {
     "hotel_id": "CT-HT-013",
@@ -152,8 +152,8 @@
     "price_per_night_usd": "350.00",
     "amenities": "WiFi,Pool,Beach Access,Spa,All-Inclusive,Kids Club",
     "available_rooms": "20",
-    "check_in_date": "2025-12-20",
-    "check_out_date": "2026-01-05"
+    "check_in_date": "2027-12-20",
+    "check_out_date": "2028-01-05"
   },
   {
     "hotel_id": "CT-HT-014",
@@ -164,8 +164,8 @@
     "price_per_night_usd": "195.00",
     "amenities": "WiFi,Pool,Beach Access,Restaurant",
     "available_rooms": "16",
-    "check_in_date": "2025-12-20",
-    "check_out_date": "2026-01-05"
+    "check_in_date": "2027-12-20",
+    "check_out_date": "2028-01-05"
   },
   {
     "hotel_id": "CT-HT-015",
@@ -176,7 +176,7 @@
     "price_per_night_usd": "72.00",
     "amenities": "WiFi,Breakfast,Parking",
     "available_rooms": "35",
-    "check_in_date": "2025-12-20",
-    "check_out_date": "2026-01-05"
+    "check_in_date": "2027-12-20",
+    "check_out_date": "2028-01-05"
   }
 ]

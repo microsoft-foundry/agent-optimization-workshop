@@ -22,6 +22,18 @@ flowchart LR
 > 🧭 **This lab covers:** _Evaluate_ (informally) — a smoke check before the
 > real evaluation labs.
 
+### 📍 You are here
+
+```mermaid
+flowchart LR
+    L0["00<br/>overview"] --> L1["01<br/>azd"]
+    L0 --> L2["02<br/>portal"]
+    L1 --> L3["03<br/>models"]
+    L2 --> L3
+    L3 --> L4["04<br/>prompt agent"] --> L5["05<br/>hosted agent"] --> L6["06<br/>verify"]:::active
+    classDef active fill:#0ea5e9,stroke:#0369a1,color:#fff;
+```
+
 ## The canonical question
 
 > **"What business-class flights are available from Chicago to Rome under

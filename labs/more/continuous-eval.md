@@ -25,7 +25,7 @@ flowchart LR
 You have two "sources of truth" that must stay in sync:
 
 - The **reference eval dataset**
-  (`artifacts/datasets/reference/evaluation-data-v1.jsonl`).
+  (`artifacts/datasets/reference/evaluation-data-v2.jsonl`).
 - The **deployed agent**'s current instructions.
 
 If instructions change, the eval must be re-run. If it regresses,
@@ -40,7 +40,7 @@ someone must approve or fix.
    # example — replace with your actual runner
    python -m contoso_eval run \
      --agent contoso-travel-concierge-prompt \
-     --dataset artifacts/datasets/reference/evaluation-data-v1.jsonl \
+     --dataset artifacts/datasets/reference/evaluation-data-v2.jsonl \
      --out artifacts/evaluators/generated/latest.json
    ```
 

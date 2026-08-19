@@ -216,3 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Workshop local caches — single source of truth is artifacts/ and src/
+.foundry/
+.do-not-commit/
+artifacts/datasets/reference/evaluation-data-v3.jsonl

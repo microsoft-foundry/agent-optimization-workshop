@@ -21,6 +21,18 @@ flowchart LR
 
 > 🧭 **This lab covers:** _Build_ — creating the prompt-agent flavor of the Concierge.
 
+### 📍 You are here
+
+```mermaid
+flowchart LR
+    L0["00<br/>overview"] --> L1["01<br/>azd"]
+    L0 --> L2["02<br/>portal"]
+    L1 --> L3["03<br/>models"]
+    L2 --> L3
+    L3 --> L4["04<br/>prompt agent"]:::active --> L5["05<br/>hosted agent"] --> L6["06<br/>verify"]
+    classDef active fill:#0ea5e9,stroke:#0369a1,color:#fff;
+```
+
 ## What's a "prompt agent"?
 
 A **Prompt Agent** in Foundry is a lightweight, portal-authored agent: it has
