@@ -14,6 +14,7 @@ from typing import Any
 from agent_framework import Agent, tool
 from agent_framework.foundry import FoundryChatClient
 from agent_framework_foundry_hosting import ResponsesHostServer
+from azure.ai.agentserver.core.tasks import set_resilient_tasks_enabled
 from azure.identity import DefaultAzureCredential
 from dotenv import load_dotenv
 from pydantic import Field
@@ -231,6 +232,7 @@ def _build_concierge() -> Agent:
 
 
 def main() -> None:
+    set_resilient_tasks_enabled(True)  # required for hosted environment
     server = ResponsesHostServer(_build_concierge())
     server.run()
 
