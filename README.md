@@ -1,23 +1,4 @@
 <div align="center">
-<table width="100%">
-<tr>
-<td<div style="background:#111111;color:#f2c200;padding:16px;margin:4px;border-radius:6px;font-family:sans-serif;">
-
-🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛
-
-### 🚧 Work in Progress 🚧
-
-**This workshop is under active development and testing.**. <br/>
-Please wait till this banner is removed before using it for self-guided or instructor-led delivery.
-
-🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛🟨⬛
-
-</div></td>
-</tr>
-</table>
-</div>
-
-<div align="center">
 
 # Build, Evaluate & Optimize AI Agents with Microsoft Foundry & GitHub Copilot
 
