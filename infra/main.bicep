@@ -133,6 +133,7 @@ param existingAppInsightsConnectionName string = ''
 //   tags: union(tags, { 'azd-service-name': <service name in azure.yaml> })
 var tags = {
   'azd-env-name': environmentName
+  'hidden-title': 'agent optimization workshop'
 }
 
 // Check if resource group exists and create it if it doesn't
