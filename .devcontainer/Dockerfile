@@ -8,7 +8,8 @@ FROM mcr.microsoft.com/devcontainers/python:1-3.13-bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PIP_NO_CACHE_DIR=1
+    PIP_NO_CACHE_DIR=1 \
+    PIP_INDEX_URL=https://packagefeedproxy.microsoft.io/pypi/simple
 
 # System tools we use across labs: curl (already present), jq (parsing outputs),
 # git (already present), zip/unzip (bundling artifacts).
