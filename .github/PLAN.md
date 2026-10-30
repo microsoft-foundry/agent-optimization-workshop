@@ -287,7 +287,7 @@ Legend: ✅ complete · 🟡 stub/partial · ❌ not started · – not applicab
 | Model deployment | ✅ | ✅ | ✅ | `fundamentals/03-deploy-models.md` — full body (azd + portal paths) |
 | Prompt Agent creation | ✅ | – | ✅ | `fundamentals/04-create-prompt-agent.md` — references baseline artifact |
 | Hosted Agent source (`src/` + `src.original/`) | – | ✅ | ✅ | main.py, agent.yaml, Dockerfile, instructions/, scripts/ ported + rebranded |
-| Hosted Agent deploy lab | – | ✅ | ✅ | `fundamentals/05-deploy-hosted-agent.md` — full body |
+| Hosted Agent deploy lab | – | ✅ | ✅ | `fundamentals/05-deploy-hosted-agent.md` — portal linker normalizes project name and persists ID + endpoint metadata before deploy |
 | Bicep infra (`infra/`) | – | ✅ | ✅ | main.bicep, params, core/{ai,host,monitor,search,storage} ported + rebranded |
 | Fundamentals verify lab | – | – | ✅ | `fundamentals/06-verify.md` — canonical question, both agents |
 | Core: observability in portal | ✅ | partial | ✅ | `core/01-observe-portal.md` — playground + live evaluators + traces |

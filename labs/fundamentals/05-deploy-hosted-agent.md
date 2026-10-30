@@ -56,7 +56,19 @@ host). You'll enable both below.
 > ```
 >
 > The script auto-discovers the RG, Foundry account, and project, then binds
-> them into an `azd env` named `contoso-travel`. Idempotent — safe to re-run.
+> them into an `azd env` named `contoso-travel`. Verify the project metadata
+> before provisioning:
+>
+> ```bash
+> azd env get-values | grep -E \
+>   "AZURE_AI_PROJECT_(NAME|ID|ENDPOINT)|FOUNDRY_PROJECT_ENDPOINT"
+> azd ai project show
+> ```
+>
+> `AZURE_AI_PROJECT_NAME` must contain only the child name (for example,
+> `contoso-travel-project`), not `account/project`. The project ID and both
+> endpoint values must also be present, and `azd ai project show` must resolve
+> the same endpoint. The linker is idempotent and safe to re-run.
 > **Skip this if you did Lab 01 (`azd`) already.**
 
 1. **Make sure the hosted-agents extension is installed.**

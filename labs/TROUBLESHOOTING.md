@@ -226,6 +226,59 @@ independently. See the 404 section for the commands.
 
 ---
 
+### `An internal server error occurred` when invoking the hosted agent
+
+**Symptom.** `azd ai agent invoke` (or the Foundry portal playground) returns:
+
+```text
+ERROR: agent error (server_error): An internal server error occurred.
+```
+
+The agent monitor (`azd ai agent monitor`) logs show:
+
+```text
+ERROR azure.ai.agentserver: Resilient task subsystem missing in hosted
+environment for response <id>; failing the request
+RuntimeWarning: coroutine 'ResponsesHostServer._handle_response' was never awaited
+```
+
+An earlier startup line reads:
+
+```text
+INFO azure.ai.agentserver: TaskManager NOT initialized (resilient tasks disabled;
+enable via set_resilient_tasks_enabled(True)). tasks_declared=True
+```
+
+**Cause.** A newer version of `agent-framework-foundry-hosting` (installed via
+`remote_build`) requires the resilient task subsystem to be explicitly enabled
+before the server starts when running in a hosted environment (`is_hosted=True`).
+The function is not called in the default `main.py`, so every request fails.
+
+**Fix.** Add the `set_resilient_tasks_enabled(True)` call in `src/main.py`
+before `server.run()`, then redeploy:
+
+```python
+# src/main.py  — add this import alongside the existing ResponsesHostServer import
+from azure.ai.agentserver.core.tasks import set_resilient_tasks_enabled
+
+def main() -> None:
+    set_resilient_tasks_enabled(True)  # required for hosted environment
+    server = ResponsesHostServer(_build_concierge())
+    server.run()
+```
+
+```bash
+azd deploy contoso-travel-concierge
+```
+
+**Prevent.** The `azure-ai-agentserver-core` package is a transitive dependency
+of `agent-framework-foundry-hosting`; no extra entry in `requirements.txt` is
+needed. If the workshop `requirements.txt` pins `agent-framework-foundry-hosting`
+to a minimum version, bump the lower bound past the version that introduced this
+requirement to catch regressions in CI.
+
+---
+
 ## Auth & RBAC
 
 ### Missing RBAC roles for hosted-agent deploy

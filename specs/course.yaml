@@ -60,7 +60,9 @@ phases:
         loop_node: deploy
         time_min: 15
         prereqs: ["fundamentals/03-deploy-models"]
-        produces: [{type: config, name: hosted-agent-endpoint}]
+        produces:
+          - {type: config, name: portal-azd-project-link}
+          - {type: config, name: hosted-agent-endpoint}
         consumes: []
       - id: "06-verify"
         title: Smoke-test both agents
